@@ -19,10 +19,23 @@ model Address {
   number           Int 
   Complement       String?
   unit             Unit?
+
+  @@map("addresses")
 }
 model Unit {
   id               Int            @id @default(autoincrement())
   name             String         @db.VarChar(30)
   address          Address?        @relation(fields: [address_id], references: [id])
-  address_id       Int            @unique      
+  address_id       Int            @unique
+
+  @@map("units")     
+}
+
+model Employee {
+  cod_employee     Int            @id @default(autoincrement())
+  fullName         String         @map("full_name")
+  hireDate         DateTime       @map("hire_date")
+  office           String         
+
+  @@map("employees")
 }
