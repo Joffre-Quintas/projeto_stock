@@ -41,6 +41,8 @@ model Product {
   createdAt        DateTime       @map("created_at")
   updateAt         DateTime       @map("update_at")
   unit             Unit[]
+
+  @@map("products")
 }
 
 model Employee {
