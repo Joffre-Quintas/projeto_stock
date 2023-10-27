@@ -19,6 +19,8 @@ model Address {
   number           Int 
   Complement       String?
   unit             Unit?
+
+  @@map("addresses")
 }
 model Unit {
   id               Int            @id @default(autoincrement())
@@ -26,15 +28,26 @@ model Unit {
   address          Address?       @relation(fields: [address_id], references: [id])
   address_id       Int            @unique      
   product          Product[]
+
+  @@map("units")     
 }
 
 model Product {
-  codProduct     Int            @id @default(autoincrement()) 
-  name           String         @db.VarChar(30)
-  slugName       String         @unique @map("slug_name")
-  quantity       Int            @db.Integer
-  price          Int            @db.Integer
-  createdAt      DateTime       @map("created_at")
-  updateAt       DateTime       @map("update_at")
-  unit           Unit[]
+  codProduct       Int            @id @default(autoincrement()) 
+  name             String         @db.VarChar(30)
+  slugName         String         @unique @map("slug_name")
+  quantity         Int            @db.Integer
+  price            Int            @db.Integer
+  createdAt        DateTime       @map("created_at")
+  updateAt         DateTime       @map("update_at")
+  unit             Unit[]
+}
+
+model Employee {
+  cod_employee     Int            @id @default(autoincrement())
+  fullName         String         @map("full_name") @db.VarChar(30)
+  hireDate         DateTime       @map("hire_date") 
+  office           String         @db.VarChar(30)
+
+  @@map("employees")
 }
