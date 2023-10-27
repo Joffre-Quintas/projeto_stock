@@ -33,9 +33,9 @@ model Unit {
 
 model Employee {
   cod_employee     Int            @id @default(autoincrement())
-  fullName         String         @map("full_name")
-  hireDate         DateTime       @map("hire_date")
-  office           String         
+  fullName         String         @map("full_name") @db.VarChar(30)
+  hireDate         DateTime       @map("hire_date") 
+  office           String         @db.VarChar(30)
 
   @@map("employees")
 }
