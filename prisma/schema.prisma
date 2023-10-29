@@ -12,12 +12,13 @@ datasource db {
 
 model Address {
   id               Int            @id @default(autoincrement())
+  cep              String         @db.VarChar(8)
   state            String         @db.VarChar(2)
   city             String         @db.VarChar(30)
   neighborhood     String         @db.VarChar(30)
   street           String         @db.VarChar(30)
   number           Int 
-  Complement       String?
+  complement       String?
   unit             Unit?
 
   @@map("addresses")
