@@ -1,18 +1,17 @@
-import { Request,Response } from "express";
-import { PrismaClient } from '@prisma/client'
+import { Request, Response } from "express";
+import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 class AddressController {
-
-  static findAllAdress = async (req: Request,res: Response) => {
+  static findAllAdress = async (req: Request, res: Response) => {
     try {
-      const allAddress = await prisma.address.findMany()
-      res.status(200).json(allAddress)
+      const allAddress = await prisma.address.findMany();
+      res.status(200).json(allAddress);
     } catch (error) {
-      res.status(500).json({message: 'Erro no servidor.'})
+      res.status(500).json({ message: "Erro no servidor." });
     }
-  }
+  };
 }
 
-export default AddressController
+export default AddressController;
