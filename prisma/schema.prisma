@@ -25,10 +25,24 @@ model Address {
 model Unit {
   id               Int            @id @default(autoincrement())
   name             String         @db.VarChar(30)
-  address          Address?        @relation(fields: [address_id], references: [id])
-  address_id       Int            @unique
+  address          Address?       @relation(fields: [address_id], references: [id])
+  address_id       Int            @unique      
+  product          Product[]
 
   @@map("units")     
+}
+
+model Product {
+  codProduct       Int            @id @default(autoincrement()) 
+  name             String         @db.VarChar(30)
+  slugName         String         @unique @map("slug_name")
+  quantity         Int            @db.Integer
+  price            Int            @db.Integer
+  createdAt        DateTime       @map("created_at")
+  updateAt         DateTime       @map("update_at")
+  unit             Unit[]
+
+  @@map("products")
 }
 
 model Employee {
