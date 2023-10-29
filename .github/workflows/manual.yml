@@ -1,0 +1,22 @@
+name: Workflow para Pull Requests na Branch Main
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Verificar Código
+
+      - name: Comentário de Aprovação Automática
+        if: github.event_name == 'pull_request'
+        run: |
+          if (alguma condição para aprovação automática) {
+            echo "Aprovação automática concedida!"
+            gh pr review ${{ github.event.pull_request.number }} --approve
+          }
+
