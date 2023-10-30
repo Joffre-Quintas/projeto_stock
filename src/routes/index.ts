@@ -4,6 +4,7 @@ import EmployeeController from "../controllers/EmployeeController";
 import validationFields from "../middleware/validationFields";
 import validation from "../middleware/validates";
 import schema from "../utils/schemas";
+import ProductController from "../controllers/ProductController";
 
 const route = Router();
 
@@ -21,5 +22,8 @@ route.get("/allEmployee", EmployeeController.findAllEmployee);
 route.post("/createNewEmployee", validation.requestBody(schema.employee) ,EmployeeController.createNewEmployee);
 route.put("/updateEmployee", validation.requestBody(schema.employeeUpdate), validation.existEmployee, validation.update,EmployeeController.updateEmployee);
 route.delete("/deleteEmployee",validation.requestBody(schema.id), validation.existEmployee, EmployeeController.deleteEmployee);
+
+route.get("/allProduct", ProductController.findAllProduct);
+route.post("/createNewProduct", validation.requestBody(schema.product),ProductController.createNewProduct);
 
 export default route;
