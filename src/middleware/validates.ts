@@ -4,7 +4,7 @@ import { Schema } from "joi";
 
 const prisma = new PrismaClient();
 
-  class validation{
+class validation{
     static requestBody = (joinSchema: Schema) => async (req: Request, res: Response, next: NextFunction) => {
       try {
         await joinSchema.validateAsync(req.body);
@@ -32,6 +32,15 @@ const prisma = new PrismaClient();
       } catch (error) {
         res.status(400).json({ mensagem: "Erro interno no servidor."})
       }
+    }
+
+    static update = (req: Request, res:Response, next: NextFunction) => {
+      const props = Object.getOwnPropertyNames(req.body)
+
+      if(props.length <= 1){
+        return res.status(400).json({ mensagem: "Atualize pelo o menos uma informação."})
+      }
+      next();
     }
   }
 

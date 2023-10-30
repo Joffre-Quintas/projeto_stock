@@ -19,7 +19,7 @@ route.put("/updateAddress", validationFields, AddressController.updateAddress);
 
 route.get("/allEmployee", EmployeeController.findAllEmployee);
 route.post("/createNewEmployee", validation.requestBody(schema.employee) ,EmployeeController.createNewEmployee);
-route.put("/updateEmployee", validation.requestBody(schema.employeeUpdate),validation.existEmployee, EmployeeController.updateEmployee);
+route.put("/updateEmployee", validation.requestBody(schema.employeeUpdate), validation.existEmployee, validation.update,EmployeeController.updateEmployee);
 route.delete("/deleteEmployee",validation.requestBody(schema.id), validation.existEmployee, EmployeeController.deleteEmployee);
 
 export default route;
