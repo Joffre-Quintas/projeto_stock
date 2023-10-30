@@ -38,7 +38,7 @@ class validation{
       const props = Object.getOwnPropertyNames(req.body)
 
       if(props.length <= 1){
-        return res.status(400).json({ mensagem: "Atualize pelo o menos uma informação."})
+        return res.status(400).json({ mensagem: "Atualize pelo menos uma informação."})
       }
       next();
     }
