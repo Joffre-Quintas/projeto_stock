@@ -55,7 +55,7 @@ class EmployeeController {
                 },
               });
     
-            res.status(200).json({ message: "Dado excluído com sucesso." });
+            res.status(200).json({ message: "Funcionário excluído com sucesso." });
         } catch (error) {
             res.status(500).json({ message: "Erro no servidor." });
         }
