@@ -23,8 +23,8 @@ const comparsion: IObjKeyProps = {
     message: "Estado é representado em sigla e letra maiúscula.",
   },
   number: {
-    regex: /\d+|N\/A/g,
-    message: "Informe o número ou, se não possuir 'N/A'",
+    regex: /\d/,
+    message: "Informe o número ou, se não possuir deixar vazio.",
   },
 };
 
