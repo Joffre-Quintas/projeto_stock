@@ -24,33 +24,45 @@ model Address {
   @@map("addresses")
 }
 model Unit {
-  id               Int            @id @default(autoincrement())
-  name             String         @db.VarChar(30)
-  address          Address?       @relation(fields: [address_id], references: [id])
-  address_id       Int            @unique  
-  product          Product[]
+  id               Int               @id @default(autoincrement())
+  name             String            @db.VarChar(30)
+  address          Address?          @relation(fields: [addressId], references: [id])
+  addressId        Int               @unique @map("address_id")  
+  product          ProductToUnit[]
 
   @@map("units")     
 }
 
 model Product {
-  codProduct       Int            @id @default(autoincrement()) 
-  name             String         @db.VarChar(30)
-  slugName         String         @unique @map("slug_name")
-  quantity         Int            @db.Integer
-  price            Int            @db.Integer
-  createdAt        DateTime       @map("created_at")
-  updateAt         DateTime       @map("update_at")
-  unit             Unit[]
+  codProduct       Int               @id @default(autoincrement()) 
+  name             String            @db.VarChar(30)
+  slugName         String            @unique @map("slug_name")
+  quantity         Int               @db.Integer
+  price            Int               @db.Integer
+  createdAt        DateTime          @map("created_at")
+  updateAt         DateTime          @map("update_at")
+  unit             ProductToUnit[]
 
   @@map("products")
 }
 
+model ProductToUnit {
+  id               Int               @id
+  product          Product           @relation(fields: [productId], references: [codProduct])
+  productId        Int               @map("product_id")
+  unit             Unit              @relation(fields: [unitId], references: [id])
+  unitId           Int               @map("unit_id")
+  quantity         Int
+  updateAt         DateTime          @map("update_at")
+
+  @@map("product_unit")            
+}
+
 model Employee {
-  cod_employee     Int            @id @default(autoincrement())
-  fullName         String         @map("full_name") @db.VarChar(30)
-  hireDate         DateTime       @map("hire_date") 
-  office           String         @db.VarChar(30)
+  codEmployee      Int               @id @map("cod_employee") @default(autoincrement())
+  fullName         String            @map("full_name") @db.VarChar(30)
+  hireDate         DateTime          @map("hire_date") 
+  office           String            @db.VarChar(30)
 
   @@map("employees")
 }

@@ -5,13 +5,13 @@ const prisma = new PrismaClient()
 class UnitController {
 
   static newUnit = async(req: Request, res: Response) => {
-    const { name, address_id, product } = req.body;
+    const { name, addressId } = req.body;
     
     try {
       await prisma.unit.create({ 
         data: {
           name,
-          address_id,
+          addressId,
         },
         include: { address: true }
       })
@@ -34,8 +34,8 @@ class UnitController {
         
         res.status(200).json(allUnit);
       }
-    } catch (error) {
-      console.log(error)
+    } catch (err) {
+      res.status(500).json({message: 'Erro no servidor.', err});
     }
   }
 }
