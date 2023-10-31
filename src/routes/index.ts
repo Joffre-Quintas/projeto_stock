@@ -3,6 +3,8 @@ import AddressController from "../controllers/AddressController";
 import EmployeeController from "../controllers/EmployeeController";
 import validationFields from "../middleware/validationFields";
 import UnitController from "../controllers/UnitController";
+import validation from "../middleware/validates";
+import schema from "../utils/schemas";
 
 const route = Router();
 
@@ -12,9 +14,9 @@ route.delete("/address", validationFields, AddressController.deleteAddress);
 route.put("/address", validationFields, AddressController.updateAddress);
 
 route.get("/employee", EmployeeController.findAllEmployee);
-route.post("/employee", EmployeeController.createNewEmployee);
-route.put("/employee", EmployeeController.updateEmployee);
-route.delete("/employee", EmployeeController.deleteEmployee);
+route.post("/employee", validation.requestBody(schema.employee), EmployeeController.createNewEmployee);
+route.put("/employee", validation.requestBody(schema.employeeUpdate), validation.existEmployee, validation.update, EmployeeController.updateEmployee);
+route.delete("/employee", validation.requestBody(schema.id), validation.existEmployee, EmployeeController.deleteEmployee);
 
 route.post("/unit", validationFields, UnitController.newUnit)
 route.get("/unit/:id?", UnitController.findUnit)
