@@ -23,7 +23,8 @@ route.post("/createNewEmployee", validation.requestBody(schema.employee) ,Employ
 route.put("/updateEmployee", validation.requestBody(schema.employeeUpdate), validation.existEmployee, validation.update,EmployeeController.updateEmployee);
 route.delete("/deleteEmployee",validation.requestBody(schema.id), validation.existEmployee, EmployeeController.deleteEmployee);
 
-route.get("/allProduct", ProductController.findAllProduct);
-route.post("/createNewProduct", validation.requestBody(schema.product),ProductController.createNewProduct);
-
+route.get("/product/:id?", ProductController.findAllProduct);
+route.post("/product",validation.requestBody(schema.product), ProductController.createNewProduct);
+route.put("/product", validation.requestBody(schema.productUpdate),validation.update ,validation.existProduct ,ProductController.updateProduct)
+route.delete("/product", validation.requestBody(schema.id), validation.existProduct, ProductController.deleteProduct)
 export default route;

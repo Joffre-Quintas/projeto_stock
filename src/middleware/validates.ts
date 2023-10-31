@@ -34,6 +34,26 @@ class validation{
       }
     }
 
+    static existProduct = async (req: Request, res: Response, next: NextFunction) => {
+      const { id } = req.body;
+
+      try {
+        const product = await prisma.product.findUnique({ 
+          where: { 
+            codProduct: Number(id) 
+          } 
+        });
+
+        if(!product){
+          return res.status(404).json({ message: "Produto não encontrado!" });
+        }
+
+        next(); 
+      } catch (error) {
+        res.status(400).json({ mensagem: "Erro interno no servidor."})
+      }
+    }
+
     static update = (req: Request, res:Response, next: NextFunction) => {
       const props = Object.getOwnPropertyNames(req.body)
 
