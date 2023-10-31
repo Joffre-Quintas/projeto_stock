@@ -14,15 +14,14 @@ class AddressController {
   };
 
   static newAddress = async (req: Request, res: Response) => {
-    const { cep, state, city, neighborhood, street, number, complement } =
-      req.body;
+    const { cep, state, city, neighborhood, street, number, complement } = req.body;
     const address = {
       cep,
       state,
       city,
       neighborhood,
       street,
-      number,
+      number: number || null,
       complement: complement || null,
     };
     try {
@@ -30,6 +29,7 @@ class AddressController {
       res.status(201).json({ message: "Endereço adicionado com sucesso!" });
     } catch (err) {
       res.status(500).json({ message: "Erro no servidor.", err });
+      console.log(err)
     }
   };
 
