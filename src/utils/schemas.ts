@@ -72,7 +72,7 @@ class schema {
             'number.integer': 'O campo quantidade precisa ser um número inteiro',
         }),
 
-        price: joi.number().positive().integer().required().messages({
+        price: joi.number().positive().required().messages({
             'any.required': 'O campo preço é obrigatório', 
             'number.base': 'Informe um preço numérico válido',
             'number.positive': 'Informe um preço positivo válido',
@@ -107,7 +107,7 @@ class schema {
             'number.integer': 'O campo quantidade precisa ser um número inteiro',
         }),
 
-        price: joi.number().positive().integer().messages({
+        price: joi.number().positive().messages({
             'any.required': 'O campo preço é obrigatório', 
             'number.base': 'Informe um preço numérico válido',
             'number.positive': 'Informe um preço positivo válido',

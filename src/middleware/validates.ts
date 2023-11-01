@@ -35,17 +35,30 @@ class validation{
     }
 
     static existProduct = async (req: Request, res: Response, next: NextFunction) => {
-      const { id } = req.body;
+      const { id, name } = req.body;
 
       try {
-        const product = await prisma.product.findUnique({ 
-          where: { 
-            codProduct: Number(id) 
-          } 
-        });
+        
+        if(name){
+          const slugName = name.toLowerCase().replace(/ /g, '_');
+          
+          const slugNameExist = await prisma.product.findUnique({ where: { slugName }})
+  
+          if(slugNameExist){
+            return res.status(400).json({ message: "Esse produto já foi cadastrado."});
+          }
+        }
 
-        if(!product){
-          return res.status(404).json({ message: "Produto não encontrado!" });
+        if(id){
+          const product = await prisma.product.findUnique({ 
+            where: { 
+              codProduct: Number(id) 
+            } 
+          });
+  
+          if(!product){
+            return res.status(404).json({ message: "Produto não encontrado!" });
+          }
         }
 
         next(); 
