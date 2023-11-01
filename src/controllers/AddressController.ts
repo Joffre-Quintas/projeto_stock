@@ -14,7 +14,9 @@ class AddressController {
   };
 
   static newAddress = async (req: Request, res: Response) => {
-    const { cep, state, city, neighborhood, street, number, complement } = req.body;
+    const { cep, state, city, neighborhood, street, number, complement } =
+      req.body;
+
     const address = {
       cep,
       state,
