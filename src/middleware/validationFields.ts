@@ -19,25 +19,21 @@ const comparsion: IObjKeyProps = {
     message: "Cep deve conter apenas números e possuir 8 dígitos",
   },
   state: {
-    regex: /[A-Z]{2}/,
+    regex: /[A-Z]{2}$/,
     message: "Estado é representado em sigla e letra maiúscula.",
   },
   number: {
-    regex: /\d+|N\/A/g,
-    message: "Informe o número ou, se não possuir 'N/A'",
+    regex: /\d/,
+    message: "Informe o número ou, se não possuir deixar vazio.",
   },
 };
 
-export default function validationFields(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
+export default function validationFields(req: Request,res: Response, next: NextFunction,) {
   const props: string[] = Object.getOwnPropertyNames(req.body);
+
   for (let prop of props) {
     if (comparsion[prop]) {
-      const regex = comparsion[prop].regex;
-      const message = comparsion[prop].message;
+      const { regex, message } = comparsion[prop];
       const propValue = req.body[prop];
 
       if (!regex.test(propValue)) {

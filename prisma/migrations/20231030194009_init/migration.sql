@@ -1,38 +1,13 @@
-/*
-  Warnings:
-
-  - You are about to drop the `Address` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Product` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Unit` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropForeignKey
-ALTER TABLE "Unit" DROP CONSTRAINT "Unit_address_id_fkey";
-
--- DropForeignKey
-ALTER TABLE "_ProductToUnit" DROP CONSTRAINT "_ProductToUnit_A_fkey";
-
--- DropForeignKey
-ALTER TABLE "_ProductToUnit" DROP CONSTRAINT "_ProductToUnit_B_fkey";
-
--- DropTable
-DROP TABLE "Address";
-
--- DropTable
-DROP TABLE "Product";
-
--- DropTable
-DROP TABLE "Unit";
-
 -- CreateTable
 CREATE TABLE "addresses" (
     "id" SERIAL NOT NULL,
+    "cep" VARCHAR(8) NOT NULL,
     "state" VARCHAR(2) NOT NULL,
     "city" VARCHAR(30) NOT NULL,
     "neighborhood" VARCHAR(30) NOT NULL,
     "street" VARCHAR(30) NOT NULL,
-    "number" INTEGER NOT NULL,
-    "Complement" TEXT,
+    "number" TEXT NOT NULL,
+    "complement" TEXT,
 
     CONSTRAINT "addresses_pkey" PRIMARY KEY ("id")
 );
@@ -69,11 +44,23 @@ CREATE TABLE "employees" (
     CONSTRAINT "employees_pkey" PRIMARY KEY ("cod_employee")
 );
 
+-- CreateTable
+CREATE TABLE "_ProductToUnit" (
+    "A" INTEGER NOT NULL,
+    "B" INTEGER NOT NULL
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "units_address_id_key" ON "units"("address_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "products_slug_name_key" ON "products"("slug_name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_ProductToUnit_AB_unique" ON "_ProductToUnit"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_ProductToUnit_B_index" ON "_ProductToUnit"("B");
 
 -- AddForeignKey
 ALTER TABLE "units" ADD CONSTRAINT "units_address_id_fkey" FOREIGN KEY ("address_id") REFERENCES "addresses"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
