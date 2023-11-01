@@ -34,6 +34,39 @@ class validation{
       }
     }
 
+    static existProduct = async (req: Request, res: Response, next: NextFunction) => {
+      const { id, name } = req.body;
+
+      try {
+        
+        if(name){
+          const slugName = name.toLowerCase().replace(/ /g, '_');
+          
+          const slugNameExist = await prisma.product.findUnique({ where: { slugName }})
+  
+          if(slugNameExist){
+            return res.status(400).json({ message: "Esse produto já foi cadastrado."});
+          }
+        }
+
+        if(id){
+          const product = await prisma.product.findUnique({ 
+            where: { 
+              codProduct: Number(id) 
+            } 
+          });
+  
+          if(!product){
+            return res.status(404).json({ message: "Produto não encontrado!" });
+          }
+        }
+
+        next(); 
+      } catch (error) {
+        res.status(400).json({ mensagem: "Erro interno no servidor."})
+      }
+    }
+
     static update = (req: Request, res:Response, next: NextFunction) => {
       const props = Object.getOwnPropertyNames(req.body)
 

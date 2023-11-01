@@ -34,13 +34,13 @@ model Unit {
 }
 
 model Product {
-  codProduct       Int               @id @default(autoincrement()) 
-  name             String            @db.VarChar(30)
-  slugName         String            @unique @map("slug_name")
-  quantity         Int               @db.Integer
-  price            Int               @db.Integer
-  createdAt        DateTime          @map("created_at")
-  updateAt         DateTime          @map("update_at")
+  codProduct       Int            @id @default(autoincrement()) 
+  name             String         @db.VarChar(30)
+  slugName         String         @unique @map("slug_name")
+  quantity         Int            @db.Integer()
+  price            Float          @db.DoublePrecision()
+  createdAt        DateTime?      @map("created_at")
+  updateAt         DateTime?      @map("update_at")
   unit             ProductToUnit[]
 
   @@map("products")

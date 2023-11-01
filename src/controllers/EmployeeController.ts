@@ -31,7 +31,7 @@ class EmployeeController {
             
             await prisma.employee.update({
                 where: {
-                    codEmployee: +id,
+                    cod_employee: +id,
                 },
                 data: {
                     ...rest
@@ -50,13 +50,13 @@ class EmployeeController {
     
             await prisma.employee.delete({
                 where: {
-                    codEmployee: +id,
+                    cod_employee: +id,
                 },
               });
     
             res.status(200).json({ message: "Funcionário excluído com sucesso." });
         } catch (error) {
-            res.status(500).json({ message: "Erro no servidor." });
+            res.status(500).json({ message: "Erro interno no servidor." });
         }
     }
 }
