@@ -31,7 +31,7 @@ class EmployeeController {
             
             await prisma.employee.update({
                 where: {
-                    cod_employee: +id,
+                    codEmployee: +id,
                 },
                 data: {
                     ...rest
@@ -50,7 +50,7 @@ class EmployeeController {
     
             await prisma.employee.delete({
                 where: {
-                    cod_employee: +id,
+                    codEmployee: +id,
                 },
               });
     

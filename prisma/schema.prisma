@@ -47,7 +47,7 @@ model Product {
 }
 
 model ProductToUnit {
-  id               Int               @id
+  id               Int               @id @default(autoincrement())
   product          Product           @relation(fields: [productId], references: [codProduct])
   productId        Int               @map("product_id")
   unit             Unit              @relation(fields: [unitId], references: [id])
