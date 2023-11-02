@@ -20,7 +20,7 @@ class validation{
       try {
         const employee = await prisma.employee.findUnique({ 
           where: { 
-            cod_employee:Number(id) 
+            codEmployee:Number(id) 
           } 
         });
 
