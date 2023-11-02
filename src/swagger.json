@@ -1,0 +1,180 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "tittle": "API Estoque",
+    "description": "Esta API visa gerenciar e ter visibilidade do estoque de cada unidade de forma Global.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/employee": {
+      "get": {
+        "summary": "Listar todos os funcionários.",
+        "description": "Essa rota retorna um array de funcionários.",
+        "tags": ["Employee"],
+        "responses": {
+          "200": {
+            "description": "Lista de funcionários.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Employee"
+                  }
+                }
+              }
+            }
+          },
+          "500":{
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria novo funcionário.",
+        "description": "Essa rota cria um novo usuário e retorna uma mensagem.",
+        "tags": ["Employee"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Employee"
+              },
+              "examples": {
+                "Estoquista": {
+                  "value": {
+                    "fullName": "Kaio Lima",
+                    "hireDate": "2023-11-02T15:00:00Z",
+                    "office": "Estoquista"
+                  }
+                },
+                "Vendedor": {
+                  "value": {
+                    "fullName": "Alvaro Lins",
+                    "hireDate": "2023-11-02T15:00:00Z",
+                    "office": "Vendedor"
+                  }
+                },
+                "Gerente": {
+                  "value": {
+                    "fullName": "Victoria Lima",
+                    "hireDate": "2023-11-02T15:00:00Z",
+                    "office": "Gerente"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Criado com sucesso!"
+          },
+          "400": {
+            "description": "Funcionário já cadastrado"
+          }
+        }
+      }
+    },
+    "/employee/id": {
+      "delete": {
+        "summary": "Deletar um funcionário pelo ID.",
+        "description": "Essa rota retorna uma mensagem de sucesso ou erro.",
+        "tags": ["Employee"],
+        "parameters":[
+          {
+            "id": "id",
+            "in": "path",
+            "description": "ID do funcionário para busca.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deletado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                  }
+                }
+              }
+          },
+          "404": {
+            "description": "Informe um id válido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza um funcionário pelo ID.",
+        "description": "Essa rota retorna uma mensagem de sucesso ou erro.",
+        "tags": ["Employee"],
+        "parameters":[
+          {
+            "id": "id",
+            "in": "path",
+            "description": "ID do funcionário para busca.",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Employee"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Atualizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Informe um id válido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Employee": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string"
+          },
+          "hireDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "office": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
