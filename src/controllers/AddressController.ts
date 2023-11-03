@@ -36,7 +36,7 @@ class AddressController {
   };
 
   static deleteAddress = async (req: Request, res: Response) => {
-    const { id } = req.body;
+    const id = Number(req.params.id);
 
     try {
       const address = await prisma.address.findUnique({ where: { id } });
@@ -52,15 +52,14 @@ class AddressController {
   };
 
   static updateAddress = async (req: Request, res: Response) => {
-    const { id, ...rest } = req.body;
+    const id = Number(req.params.id);
+    const data = req.body
     try {
       const address = await prisma.address.findUnique({ where: { id } });
       if (address) {
         await prisma.address.update({
           where: { id },
-          data: {
-            ...rest,
-          },
+          data
         });
         res.status(200).json({ message: "Endereço atualizado com sucesso!" });
       } else {
