@@ -2,13 +2,6 @@ import joi from "joi";
 
 class schema {
     static employeeUpdate = joi.object({
-        id: joi.number().positive().integer().required().messages({
-            'any.required': 'O campo id é obrigatório', 
-            'number.base': 'Informe um id numérico válido',
-            'number.positive': 'Informe um id positivo válido',
-            'number.integer': 'O campo id precisa ser um número inteiro',
-        }),
-
         fullName: joi.string().messages({
             'any.required': 'O campo nome completo é obrigatório',
             'string.empty': 'O campo nome completo não pode ficar vazio', 

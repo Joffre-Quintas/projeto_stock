@@ -18,7 +18,7 @@ route.put("/address/:id", validationFields, AddressController.updateAddress);
 route.get("/employee", EmployeeController.findAllEmployee);
 route.post("/employee", validation.requestBody(schema.employee), EmployeeController.createNewEmployee);
 route.put("/employee/:id", validation.requestBody(schema.employeeUpdate), validation.existEmployee, validation.update, EmployeeController.updateEmployee);
-route.delete("/employee/:id", validation.requestBody(schema.id), validation.existEmployee, EmployeeController.deleteEmployee);
+route.delete("/employee/:id", validation.existEmployee, EmployeeController.deleteEmployee);
 
 route.post("/unit", validationFields, UnitController.newUnit)
 route.get("/unit/:id?", validation.existUnit, UnitController.findUnit)
