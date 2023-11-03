@@ -48,6 +48,12 @@ class schema {
             'string.empty': 'O campo função de trabalho não pode ficar vazio',
             'string.base': 'O campo função de trabalho deve ser escrito no formato de string', 
         }),
+        cpf: joi.string().min(11).max(11).regex(/\d{11}/).messages({
+            'string.pattern.base': 'O formato deve ser numérico.', 
+            'any.required': 'O campo função de trabalho é obrigatório',
+            'string.max': 'CPF de deve conter 11 dígitos. Apenas números.',
+            'string.min': 'CPF de deve conter 11 dígitos. Apenas números.',
+        })
     })
 
     static id = joi.object({
