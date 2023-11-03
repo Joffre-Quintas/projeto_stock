@@ -62,6 +62,6 @@ model Employee {
   fullName         String            @map("full_name") @db.VarChar(30)
   hireDate         DateTime          @map("hire_date") 
   office           String            @db.VarChar(30)
-
+  cpf              String            @db.VarChar(11) @unique
   @@map("employees")
 }

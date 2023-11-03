@@ -27,15 +27,13 @@ class EmployeeController {
 
     static updateEmployee = async (req: Request, res: Response) => {
         try {
-            const { id, ...rest } = req.body;
-            
+            const id = +req.params.id;
+            const data = req.body 
             await prisma.employee.update({
                 where: {
-                    codEmployee: +id,
+                    codEmployee: id,
                 },
-                data: {
-                    ...rest
-                }
+                data
             });
             
             res.status(200).json({ message: "Dados do empregado atualizado com sucesso." });
@@ -46,11 +44,11 @@ class EmployeeController {
 
     static deleteEmployee = async (req: Request, res: Response) => {
         try {
-            const { id } = req.body;
+            const id = +req.params.id;
     
             await prisma.employee.delete({
                 where: {
-                    codEmployee: +id,
+                    codEmployee: id,
                 },
               });
     

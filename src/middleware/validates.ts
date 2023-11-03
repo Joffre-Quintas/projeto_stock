@@ -15,12 +15,12 @@ class validation{
     };
 
     static existEmployee = async (req: Request, res: Response, next: NextFunction) => {
-      const { id } = req.body;
+      const id = +req.params.id;
 
       try {
         const employee = await prisma.employee.findUnique({ 
           where: { 
-            codEmployee:Number(id) 
+            codEmployee:id
           } 
         });
 
@@ -70,14 +70,12 @@ class validation{
     }
 
     static existUnit = async (req: Request, res: Response, next: NextFunction) => {
-      const id = req.params.id;
+      const id = +req.params.id;
 
       try {
         if(id){
           const unit = await prisma.unit.findUnique({ 
-            where: { 
-              id: Number(id) 
-            } 
+            where: {id} 
           });
 
           if(!unit){
@@ -92,10 +90,10 @@ class validation{
     }
 
     static existProductUnit = async (req: Request, res: Response, next: NextFunction) => {
-      const id = req.params.id;
+      const id = +req.params.id;
 
       try {
-        const productUnit = await prisma.productToUnit.findUnique({ where: {id: Number(id) } });
+        const productUnit = await prisma.productToUnit.findUnique({ where: {id} });
 
         if(!productUnit){
           return res.status(404).json({ mensagem: "A relação do produto e unidade não foi encontrada."});
@@ -110,7 +108,7 @@ class validation{
     static productUnit = async (req: Request, res: Response, next: NextFunction) => {
      const { productId, unitId } = req.body;
 
-     const id = Number(req.params.id);
+     const id = +req.params.id;
 
      try {
       const existProductUnit = await prisma.productToUnit.findUnique({ where: { id }});
@@ -133,7 +131,7 @@ class validation{
       if(unitId){
         const unit = await prisma.unit.findUnique({ 
           where: { 
-            id: Number(unitId) 
+            id: +unitId 
           } 
         });
 
