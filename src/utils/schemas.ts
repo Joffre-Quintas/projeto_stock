@@ -121,6 +121,52 @@ class schema {
             'number.integer': 'O campo unidade precisa ser um número inteiro',
         }),
     })
+
+    static productUnit = joi.object({
+        productId: joi.number().positive().integer().required().messages({
+            'any.required': 'O campo id do produto é obrigatório',
+            'number.base': 'Informe um id do produto numérico válido',
+            'number.positive': 'Informe um id do produto positivo válido',
+            'number.integer': 'O campo id do produto precisa ser um número inteiro',
+        }),
+
+        unitId: joi.number().positive().integer().required().messages({
+            'any.required': 'O campo id do unidade é obrigatório',
+            'number.base': 'Informe um id da unidade numérico válido',
+            'number.positive': 'Informe um id da unidade positivo válido',
+            'number.integer': 'O campo id da unidade precisa ser um número inteiro',
+        }),
+
+        quantity: joi.number().positive().integer().required().messages({
+            'any.required': 'O campo id do quantidade é obrigatório',
+            'number.base': 'Informe um quantidade numérico válido',
+            'number.positive': 'Informe um quantidade positivo válido',
+            'number.integer': 'O campo quantidade precisa ser um número inteiro',
+        })
+    })
+
+    static productUnitUpdate = joi.object({
+        productId: joi.number().positive().integer().messages({
+            'any.required': 'O campo id do produto é obrigatório',
+            'number.base': 'Informe um id do produto numérico válido',
+            'number.positive': 'Informe um id do produto positivo válido',
+            'number.integer': 'O campo id do produto precisa ser um número inteiro',
+        }),
+
+        unitId: joi.number().positive().integer().messages({
+            'any.required': 'O campo id do unidade é obrigatório',
+            'number.base': 'Informe um id da unidade numérico válido',
+            'number.positive': 'Informe um id da unidade positivo válido',
+            'number.integer': 'O campo id da unidade precisa ser um número inteiro',
+        }),
+
+        quantity: joi.number().positive().integer().messages({
+            'any.required': 'O campo quantidade é obrigatório',
+            'number.base': 'Informe um quantidade numérico válido',
+            'number.positive': 'Informe um quantidade positivo válido',
+            'number.integer': 'O campo quantidade precisa ser um número inteiro',
+        })
+    })
 }
 
 export default schema;
