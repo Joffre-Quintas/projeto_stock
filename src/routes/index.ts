@@ -12,8 +12,8 @@ const route = Router();
 
 route.get("/address", validationFields, AddressController.findAllAddress);
 route.post("/address", validationFields, AddressController.newAddress);
-route.delete("/address", validationFields, AddressController.deleteAddress);
-route.put("/address", validationFields, AddressController.updateAddress);
+route.delete("/address/:id", validationFields, AddressController.deleteAddress);
+route.put("/address/:id", validationFields, AddressController.updateAddress);
 
 route.get("/employee", EmployeeController.findAllEmployee);
 route.post("/employee", validation.requestBody(schema.employee), EmployeeController.createNewEmployee);
