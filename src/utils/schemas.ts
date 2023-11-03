@@ -2,13 +2,6 @@ import joi from "joi";
 
 class schema {
     static employeeUpdate = joi.object({
-        id: joi.number().positive().integer().required().messages({
-            'any.required': 'O campo id é obrigatório', 
-            'number.base': 'Informe um id numérico válido',
-            'number.positive': 'Informe um id positivo válido',
-            'number.integer': 'O campo id precisa ser um número inteiro',
-        }),
-
         fullName: joi.string().messages({
             'any.required': 'O campo nome completo é obrigatório',
             'string.empty': 'O campo nome completo não pode ficar vazio', 
@@ -48,6 +41,12 @@ class schema {
             'string.empty': 'O campo função de trabalho não pode ficar vazio',
             'string.base': 'O campo função de trabalho deve ser escrito no formato de string', 
         }),
+        cpf: joi.string().min(11).max(11).regex(/\d{11}/).messages({
+            'string.pattern.base': 'O formato deve ser numérico.', 
+            'any.required': 'O campo função de trabalho é obrigatório',
+            'string.max': 'CPF de deve conter 11 dígitos. Apenas números.',
+            'string.min': 'CPF de deve conter 11 dígitos. Apenas números.',
+        })
     })
 
     static id = joi.object({
