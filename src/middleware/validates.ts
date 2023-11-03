@@ -35,8 +35,10 @@ class validation{
     }
 
     static existProduct = async (req: Request, res: Response, next: NextFunction) => {
-      const { id, name } = req.body;
+      const { name } = req.body;
 
+      const id = Number(req.params.id);
+      
       try {
         
         if(name){
@@ -52,7 +54,7 @@ class validation{
         if(id){
           const product = await prisma.product.findUnique({ 
             where: { 
-              codProduct: Number(id) 
+              codProduct: id
             } 
           });
   
@@ -67,10 +69,88 @@ class validation{
       }
     }
 
+    static existUnit = async (req: Request, res: Response, next: NextFunction) => {
+      const id = req.params.id;
+
+      try {
+        if(id){
+          const unit = await prisma.unit.findUnique({ 
+            where: { 
+              id: Number(id) 
+            } 
+          });
+
+          if(!unit){
+            return res.status(404).json({ message: "Unidade não encontrada!" });
+          }
+        }
+
+        next();
+      } catch (error) {
+        res.status(400).json({ mensagem: "Erro interno no servidor."})
+      }
+    }
+
+    static existProductUnit = async (req: Request, res: Response, next: NextFunction) => {
+      const id = req.params.id;
+
+      try {
+        const productUnit = await prisma.productToUnit.findUnique({ where: {id: Number(id) } });
+
+        if(!productUnit){
+          return res.status(404).json({ mensagem: "A relação do produto e unidade não foi encontrada."});
+        }
+
+        next();
+      } catch (error) {
+        res.status(400).json({ mensagem: "Erro interno no servidor."});
+      }
+    }
+
+    static productUnit = async (req: Request, res: Response, next: NextFunction) => {
+     const { productId, unitId } = req.body;
+
+     const id = Number(req.params.id);
+
+     try {
+      const existProductUnit = await prisma.productToUnit.findUnique({ where: { id }});
+
+      if(!existProductUnit){
+        return res.status(200).json({ message: 'Id da relação do produto e unidade não existe, relação não atualizada.' });
+      }
+
+      if(productId){
+        const product = await prisma.product.findUnique({ 
+          where: { 
+            codProduct: Number(productId) 
+          } 
+        });
+
+        if(!product){
+          return res.status(404).json({ message: "Produto não encontrado!" });
+        }
+      }
+      if(unitId){
+        const unit = await prisma.unit.findUnique({ 
+          where: { 
+            id: Number(unitId) 
+          } 
+        });
+
+        if(!unit){
+          return res.status(404).json({ message: "Unidade não encontrada!" });
+        }
+      }
+      next();
+     } catch (error) {
+      res.status(400).json({ mensagem: "Erro interno no servidor."});
+     }
+    }
+
     static update = (req: Request, res:Response, next: NextFunction) => {
       const props = Object.getOwnPropertyNames(req.body)
 
-      if(props.length <= 1){
+      if(props.length === 0){
         return res.status(400).json({ mensagem: "Atualize pelo menos uma informação."})
       }
       next();

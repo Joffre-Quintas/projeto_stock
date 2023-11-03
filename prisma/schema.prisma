@@ -37,7 +37,6 @@ model Product {
   codProduct       Int            @id @default(autoincrement()) 
   name             String         @db.VarChar(30)
   slugName         String         @unique @map("slug_name")
-  quantity         Int            @db.Integer()
   price            Float          @db.DoublePrecision()
   createdAt        DateTime?      @map("created_at")
   updateAt         DateTime?      @map("update_at")
@@ -47,7 +46,7 @@ model Product {
 }
 
 model ProductToUnit {
-  id               Int               @id
+  id               Int               @id @default(autoincrement())
   product          Product           @relation(fields: [productId], references: [codProduct])
   productId        Int               @map("product_id")
   unit             Unit              @relation(fields: [unitId], references: [id])

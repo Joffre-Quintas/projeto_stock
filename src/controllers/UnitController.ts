@@ -5,13 +5,13 @@ const prisma = new PrismaClient()
 class UnitController {
 
   static newUnit = async(req: Request, res: Response) => {
-    const { name, addressId } = req.body;
+    const { id, name } = req.body;
     
     try {
       await prisma.unit.create({ 
         data: {
+          id,
           name,
-          addressId,
         },
         include: { address: true }
       })

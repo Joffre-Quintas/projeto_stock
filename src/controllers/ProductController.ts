@@ -26,13 +26,13 @@ class ProductController {
     }
 
     static createNewProduct = async (req:Request, res:Response ) => {
-        const { name, quantity, price } = req.body;
+        const { name, price } = req.body;
         
         const slugName = name.toLowerCase().replace(/ /g, '_');
         
         const createdAt = new Date;
         
-        const product: any = { name, slugName, quantity, price, createdAt};      
+        const product: any = { name, slugName, price, createdAt};      
         
         try {
             await  prisma.product.create({ data: product });
@@ -44,7 +44,7 @@ class ProductController {
     }
 
     static updateProduct = async (req: Request, res: Response) =>{
-        const { id, name, quantity, price } = req.body; 
+        const { id, name, price } = req.body; 
 
         const slugName = name.toLowerCase().replace(/ /g, '_');
 
@@ -56,7 +56,7 @@ class ProductController {
                     codProduct: id
                 },
                 data: {
-                    name, slugName, quantity, price, updateAt
+                    name, slugName, price, updateAt
                 }
             });
 
