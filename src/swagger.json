@@ -156,6 +156,87 @@
           }
         }
       }
+    },
+    "/productUnit": {
+      "post": {
+        "summary": "Inserir produto no estoque da unidade.",
+        "description": "Essa rota retorna uma mensagem de sucesso ou erro.",
+        "tags": ["ProductUnit"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductUnit"
+              },
+              "examples": {
+                "Inserção 1": {
+                  "value": {
+                    "productId": 1,
+                    "unitId": 1,
+                    "quantity": 500
+                  }
+                },
+                "Inserção 2": {
+                  "value": {
+                    "productId": 1,
+                    "unitId": 2,
+                    "quantity": 500
+                  }
+                },
+                "Inserção 3": {
+                  "value": {
+                    "productId": 2,
+                    "unitId": 5,
+                    "quantity": 500
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Relação produto e unidade criada com sucesso."
+          },
+          "200": {
+            "description": "Relação produto e unidade já existe, quantidade atualizada com sucesso."
+          },
+          "400": {
+            "description": "Mensagem de erro no formato string.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Mensagem de erro de produto ou unidade não encontrada."
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar todos os produto cadastrados em sua respectiva unidade.",
+        "description": "Essa rota retorna um array dos produto cadastrados em sua respectiva unidade.",
+        "tags": ["ProductUnit"],
+        "responses": {
+          "200": {
+            "description": "Lista de estoque.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductUnit"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -172,6 +253,20 @@
           },
           "office": {
             "type": "string"
+          }
+        }
+      },
+      "ProductUnit": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "number"
+          },
+          "unitId": {
+            "type": "number"
+          },
+          "quantity": {
+            "type": "number"
           }
         }
       }

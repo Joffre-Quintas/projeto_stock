@@ -35,7 +35,7 @@ class validation{
     }
 
     static existProduct = async (req: Request, res: Response, next: NextFunction) => {
-      const { name } = req.body;
+      const { name, productId } = req.body;
 
       const id = Number(req.params.id);
       
@@ -63,6 +63,18 @@ class validation{
           }
         }
 
+        if(productId){
+          const product = await prisma.product.findUnique({ 
+            where: { 
+              codProduct: +productId
+            } 
+          });
+  
+          if(!product){
+            return res.status(404).json({ message: "Produto não encontrado!" });
+          }
+        }
+
         next(); 
       } catch (error) {
         res.status(400).json({ mensagem: "Erro interno no servidor."})
@@ -72,11 +84,21 @@ class validation{
     static existUnit = async (req: Request, res: Response, next: NextFunction) => {
       const id = req.params.id;
 
+      const { unitId } = req.body;
+
       try {
         if(id){
           const unit = await prisma.unit.findUnique({ 
             where: { 
               id: Number(id) 
+            } 
+          });
+        }
+
+        if(unitId){
+          const unit = await prisma.unit.findUnique({ 
+            where: { 
+              id: +unitId
             } 
           });
 
@@ -125,6 +147,7 @@ class validation{
             codProduct: Number(productId) 
           } 
         });
+
 
         if(!product){
           return res.status(404).json({ message: "Produto não encontrado!" });
