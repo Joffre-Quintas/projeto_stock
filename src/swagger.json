@@ -228,7 +228,7 @@
             }
           },
           "400": {
-            "description": "Requisição inválida. Verifique os dados enviados."
+            "description": "Requisição inválida. Verifique os dados enviados. Esse produto já foi cadastrado."
           },
           "500": {
             "description": "Erro no servidor"
@@ -259,6 +259,26 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/Product"
+              },
+              "examples": {
+                "Guarda Roupa": {
+                  "value": {
+                    "name": "Guarda Roupa",
+                    "price": 1499.99
+                  }
+                },
+                "Ventilador": {
+                  "value": {
+                    "name": "Ventilador",
+                    "price": 279.99
+                  }
+                }, 
+                "Monitor de 29°": {
+                  "value": {
+                    "name": "Monitor de 29°",
+                    "price": 899.99
+                  }              
+                }                
               }
             }
           }
