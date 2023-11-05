@@ -11,10 +11,10 @@ import StockController from "../controllers/StockController";
 
 const route = Router();
 
-route.get("/address", validationFields, AddressController.findAllAddress);
-route.post("/address", validationFields, AddressController.newAddress);
-route.delete("/address/:id", validationFields, AddressController.deleteAddress);
-route.put("/address/:id", validationFields, AddressController.updateAddress);
+route.get("/address", AddressController.findAllAddress);
+route.post("/address", validation.requestBody(schema.address), AddressController.newAddress);
+route.put("/address/:id", validation.requestBody(schema.addressUpdate), validation.update, AddressController.updateAddress);
+route.delete("/address/:id", AddressController.deleteAddress);
 
 route.get("/employee", EmployeeController.findAllEmployee);
 route.post("/employee", validation.requestBody(schema.employee), EmployeeController.createNewEmployee);

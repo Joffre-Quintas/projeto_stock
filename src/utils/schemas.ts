@@ -1,6 +1,91 @@
 import joi from "joi";
 
 class schema {
+
+    static address = joi.object({
+        cep: joi.string().min(8).max(8).regex(/\d{8}/).required().messages({
+            'string.pattern.base': 'O formato deve ser numérico.', 
+            'any.required': 'O campo CEP é obrigatório',
+            'string.max': 'CEP de deve conter 8 dígitos. Apenas números.',
+            'string.min': 'CEP de deve conter 8 dígitos. Apenas números.',
+        }),
+
+        state: joi.string().min(2).max(2).regex(/[A-Z]{2}/).required().messages({
+            'string.pattern.base': 'O formato deve ser a sigla do estado.', 
+            'any.required': 'O campo estado é obrigatório',
+            'string.max': 'Estado de deve conter 2 dígitos. Apenas sigla.',
+            'string.min': 'Estado de deve conter 2 dígitos. Apenas sigla.',
+        }),
+
+        city: joi.string().required().messages({
+            'any.required': 'O campo cidade é obrigatório',
+            'string.empty': 'O campo cidade não pode ficar vazio', 
+            'string.base': 'Formato incorreto.',
+        }),
+
+        neighborhood: joi.string().required().messages({
+            'any.required': 'O campo bairro é obrigatório',
+            'string.empty': 'O campo bairro não pode ficar vazio', 
+            'string.base': 'Formato incorreto.',
+        }),
+
+        street: joi.string().required().messages({
+            'any.required': 'O campo da rua é obrigatório',
+            'string.empty': 'O campo da rua não pode ficar vazio', 
+            'string.base': 'Formato incorreto.',
+        }),
+
+        number: joi.string().messages({
+            'string.base': 'Formato incorreto.',
+        }),
+
+        complement: joi.string().messages({
+            'string.base': 'Formato incorreto.',
+        }),
+    })
+
+    static addressUpdate = joi.object({
+        cep: joi.string().min(8).max(8).regex(/\d{8}/).messages({
+            'string.pattern.base': 'O formato deve ser numérico.', 
+            'any.required': 'O campo CEP é obrigatório',
+            'string.max': 'CEP de deve conter 8 dígitos. Apenas números.',
+            'string.min': 'CEP de deve conter 8 dígitos. Apenas números.',
+        }),
+
+        state: joi.string().min(2).max(2).regex(/[A-Z]{2}/).messages({
+            'string.pattern.base': 'O formato deve ser a sigla do estado.', 
+            'any.required': 'O campo estado é obrigatório',
+            'string.max': 'Estado de deve conter 2 dígitos. Apenas sigla.',
+            'string.min': 'Estado de deve conter 2 dígitos. Apenas sigla.',
+        }),
+
+        city: joi.string().messages({
+            'any.required': 'O campo cidade é obrigatório',
+            'string.empty': 'O campo cidade não pode ficar vazio', 
+            'string.base': 'Formato incorreto.',
+        }),
+
+        neighborhood: joi.string().messages({
+            'any.required': 'O campo bairro é obrigatório',
+            'string.empty': 'O campo bairro não pode ficar vazio', 
+            'string.base': 'Formato incorreto.',
+        }),
+
+        street: joi.string().messages({
+            'any.required': 'O campo da rua é obrigatório',
+            'string.empty': 'O campo da rua não pode ficar vazio', 
+            'string.base': 'Formato incorreto.',
+        }),
+
+        number: joi.string().messages({
+            'string.base': 'Formato incorreto.',
+        }),
+
+        complement: joi.string().messages({
+            'string.base': 'Formato incorreto.',
+        }),
+    })
+
     static employeeUpdate = joi.object({
         fullName: joi.string().messages({
             'any.required': 'O campo nome completo é obrigatório',

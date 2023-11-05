@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+import schema from "../utils/schemas"
 
 const prisma = new PrismaClient();
 
@@ -39,6 +40,8 @@ class AddressController {
     const id = Number(req.params.id);
 
     try {
+      await schema.schemaNumber.validateAsync(id);
+
       const address = await prisma.address.findUnique({ where: { id } });
       if (address) {
         await prisma.address.delete({ where: { id } });
@@ -52,9 +55,12 @@ class AddressController {
   };
 
   static updateAddress = async (req: Request, res: Response) => {
-    const id = Number(req.params.id);
+    const id = +req.params.id;
     const data = req.body
     try {
+
+      if(Number.isNaN(id)) {return res.status(406).json({message: "Id deve ser um número"})  }
+
       const address = await prisma.address.findUnique({ where: { id } });
       if (address) {
         await prisma.address.update({
