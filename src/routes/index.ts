@@ -7,6 +7,7 @@ import validation from "../middleware/validates";
 import schema from "../utils/schemas";
 import ProductController from "../controllers/ProductController";
 import ProductToUnitController from "../controllers/ProductToUnitController";
+import StockController from "../controllers/StockController";
 
 const route = Router();
 
@@ -32,5 +33,7 @@ route.get("/productUnit/:id?", ProductToUnitController.findProductUnit)
 route.post("/productUnit", validation.requestBody(schema.productUnit), validation.existProduct, validation.existUnit, ProductToUnitController.createNewRelationProductUnit)
 route.put("/productUnit/:id", validation.requestBody(schema.productUnitUpdate), validation.update, validation.productUnit, ProductToUnitController.updateProductUnit)
 route.delete("/productUnit/:id", validation.existProductUnit, ProductToUnitController.deleteProductUnit)
+
+route.get('/stockService', StockController.consultAssetValue)
 
 export default route;

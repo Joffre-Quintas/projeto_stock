@@ -15,9 +15,8 @@ class EmployeeController {
 
     static createNewEmployee = async (req: Request, res: Response) => {
         try {
-            const { fullName, hireDate, office } = req.body;
-            const employee = { fullName, hireDate, office };
-            await prisma.employee.create({ data: employee});
+            const data = req.body;
+            await prisma.employee.create({ data });
 
             res.status(201).json({ message: "Novo empregado cadastrado com sucesso"});
         } catch (error) {
