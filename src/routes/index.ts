@@ -25,7 +25,7 @@ route.get("/unit/:id?", validation.existUnit, UnitController.findUnit)
 
 route.get("/product/:id?", ProductController.findAllProduct);
 route.post("/product", validation.requestBody(schema.product), validation.existProduct, ProductController.createNewProduct);
-route.put("/product", validation.requestBody(schema.productUpdate), validation.update , validation.existProduct, ProductController.updateProduct)
+route.put("/product/:id", validation.requestBody(schema.productUpdate), validation.update , validation.existProduct, ProductController.updateProduct)
 route.delete("/product/:id", validation.existProduct, ProductController.deleteProduct)
 
 route.get("/productUnit/:id?", ProductToUnitController.findProductUnit)
