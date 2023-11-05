@@ -63,5 +63,6 @@ model Employee {
   hireDate         DateTime          @map("hire_date") 
   office           String            @db.VarChar(30)
   cpf              String            @db.VarChar(11) @unique
+  
   @@map("employees")
 }

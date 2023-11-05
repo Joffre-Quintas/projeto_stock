@@ -5,12 +5,15 @@ const prisma = new PrismaClient()
 class UnitController {
 
   static newUnit = async(req: Request, res: Response) => {
-    const { id, name } = req.body;
+    const { addressId, name } = req.body;
     
     try {
+      const addressExist = await prisma.address.findUnique({ where: { id: addressId }})
+      if(!addressExist) return res.status(204).json({ message: 'Endereço não cadastrado' })
+      
       await prisma.unit.create({ 
         data: {
-          id,
+          addressId,
           name,
         },
         include: { address: true }
