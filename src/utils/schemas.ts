@@ -87,12 +87,6 @@ class schema {
     })
 
     static productUpdate = joi.object({
-        id: joi.number().positive().integer().required().messages({
-            'number.base': 'Informe um id numérico válido',
-            'number.positive': 'Informe um id positivo válido',
-            'number.integer': 'O campo id precisa ser um número inteiro',
-        }),
-
         name: joi.string().messages({
             'any.required': 'O campo nome é obrigatório',
             'string.empty': 'O campo nome não pode ficar vazio', 

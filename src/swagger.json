@@ -156,7 +156,182 @@
           }
         }
       }
-    }
+    },
+    "/product": {
+      "get": {
+        "summary": "Listar todos os produtos",
+        "description": "Esta rota retorna uma lista de todos os produtos disponíveis em estoque.",
+        "tags": ["Product"],
+        "responses": {
+          "200": {
+            "description": "Lista de produtos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "post": {
+        "summary": "Criar um novo produto",
+        "description": "Esta rota permite criar um novo produto no sistema.",
+        "tags": ["Product"],
+        "requestBody": {
+          "description": "Dados do novo produto",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              },
+              "examples": {
+                "Geladeira": {
+                  "value": {
+                    "name": "Geladeira",
+                    "quantity": 10,
+                    "price": 799.99
+                  }
+                },
+                "TV LED": {
+                  "name": "TV LED",
+                  "quantity": 5,
+                  "price": 499.99
+                }, 
+                "Maquina de Lavar": {
+                  "name": "Máquina de Lavar",
+                  "quantity": 8,
+                  "price": 699.99
+                }                
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Produto criado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida. Verifique os dados enviados."
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      }
+    },
+    "/product/id": { 
+      "put": {
+        "summary": "Atualiza um produto pelo ID.",
+        "description": "Esta rota permite atualizar um produto existente pelo seu ID.",
+        "tags": ["Product"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do produto a ser atualizado.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dados do produto atualizado",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Produto atualizado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação ou atualização inválida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ID do produto não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Exclui um produto pelo ID.",
+        "description": "Esta rota permite excluir um produto existente pelo seu ID.",
+        "tags": ["Product"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do produto a ser excluído.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Produto excluído com sucesso."
+          },
+          "404": {
+            "description": "ID do produto não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }                  
+    }    
   },
   "components": {
     "schemas": {
@@ -173,8 +348,43 @@
           "office": {
             "type": "string"
           }
+        }    
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "codProduct": {
+            "type": "integer",
+            "description": "O código único do produto."
+          },
+          "name": {
+            "type": "string",
+            "description": "O nome do produto."
+          },
+          "slugName": {
+            "type": "string",
+            "description": "O nome simplificado do produto para URLs."
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "A quantidade disponível do produto em estoque."
+          },
+          "price": {
+            "type": "number",
+            "description": "O preço unitário do produto."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "A data e hora em que o produto foi criado."
+          },
+          "updatedAt": {
+            "type": ["string", "null"],
+            "format": "date-time",
+            "description": "A data e hora da última atualização do produto, ou nulo se não houver atualização."
+          }
         }
-      }
+      }  
     }
   }
 }

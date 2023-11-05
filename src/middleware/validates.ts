@@ -37,7 +37,7 @@ class validation{
     static existProduct = async (req: Request, res: Response, next: NextFunction) => {
       const { name } = req.body;
 
-      const id = Number(req.params.id);
+      const id = +req.params.id;
       
       try {
         
