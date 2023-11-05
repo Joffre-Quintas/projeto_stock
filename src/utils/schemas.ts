@@ -142,12 +142,6 @@ class schema {
         })
     })
 
-    static schemaNumber = joi.number().positive().integer().messages({
-        'number.base': 'Informe um id numérico válido',
-        'number.positive': 'Informe um id positivo válido',
-        'number.integer': 'O campo id precisa ser um número inteiro',
-    });
-
     static product = joi.object({
         name: joi.string().required().messages({
             'any.required': 'O campo nome é obrigatório',
