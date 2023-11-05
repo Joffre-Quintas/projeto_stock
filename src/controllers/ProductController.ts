@@ -6,7 +6,8 @@ const prisma = new PrismaClient();
 
 class ProductController {
     static findAllProduct = async (req: Request, res: Response) => {
-        const id = Number(req.params.id);
+        const id = +req.params.id;
+
         try {
             if(id){
                 const findOneProduct = await prisma.product.findUnique({ where: { codProduct: id } })
@@ -44,7 +45,9 @@ class ProductController {
     }
 
     static updateProduct = async (req: Request, res: Response) =>{
-        const { id, name, price } = req.body; 
+        const id = +req.params.id;
+
+        const { name, price } = req.body; 
 
         const slugName = name.toLowerCase().replace(/ /g, '_');
 
@@ -67,12 +70,12 @@ class ProductController {
     }
 
     static deleteProduct = async (req: Request, res: Response) =>{
-        const { id } = req.body;
+        const id = +req.params.id;
 
         try {
             await prisma.product.delete({
                 where: {
-                    codProduct: Number(id),
+                    codProduct: id,
                 },
               });
     
