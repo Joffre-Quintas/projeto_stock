@@ -197,19 +197,20 @@
                 "Geladeira": {
                   "value": {
                     "name": "Geladeira",
-                    "quantity": 10,
-                    "price": 799.99
+                    "price": 799
                   }
                 },
                 "TV LED": {
-                  "name": "TV LED",
-                  "quantity": 5,
-                  "price": 499.99
+                  "value": {
+                    "name": "TV LED",
+                    "price": 499
+                  }
                 }, 
                 "Maquina de Lavar": {
-                  "name": "Máquina de Lavar",
-                  "quantity": 8,
-                  "price": 699.99
+                  "value": {
+                    "name": "Máquina de Lavar",
+                    "price": 699
+                  }              
                 }                
               }
             }
@@ -227,7 +228,7 @@
             }
           },
           "400": {
-            "description": "Requisição inválida. Verifique os dados enviados."
+            "description": "Requisição inválida. Verifique os dados enviados. Esse produto já foi cadastrado."
           },
           "500": {
             "description": "Erro no servidor"
@@ -258,6 +259,26 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/Product"
+              },
+              "examples": {
+                "Guarda Roupa": {
+                  "value": {
+                    "name": "Guarda Roupa",
+                    "price": 1499.99
+                  }
+                },
+                "Ventilador": {
+                  "value": {
+                    "name": "Ventilador",
+                    "price": 279.99
+                  }
+                }, 
+                "Monitor de 29°": {
+                  "value": {
+                    "name": "Monitor de 29°",
+                    "price": 899.99
+                  }              
+                }                
               }
             }
           }
@@ -353,37 +374,15 @@
       "Product": {
         "type": "object",
         "properties": {
-          "codProduct": {
-            "type": "integer",
-            "description": "O código único do produto."
-          },
           "name": {
             "type": "string",
             "description": "O nome do produto."
           },
-          "slugName": {
-            "type": "string",
-            "description": "O nome simplificado do produto para URLs."
-          },
-          "quantity": {
-            "type": "integer",
-            "description": "A quantidade disponível do produto em estoque."
-          },
           "price": {
             "type": "number",
             "description": "O preço unitário do produto."
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "A data e hora em que o produto foi criado."
-          },
-          "updatedAt": {
-            "type": ["string", "null"],
-            "format": "date-time",
-            "description": "A data e hora da última atualização do produto, ou nulo se não houver atualização."
           }
-        }
+        }  
       }  
     }
   }
