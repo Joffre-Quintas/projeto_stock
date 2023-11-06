@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import schema from "../utils/schemas"
 
 const prisma = new PrismaClient();
 
@@ -39,9 +38,9 @@ class AddressController {
   static deleteAddress = async (req: Request, res: Response) => {
     const id = Number(req.params.id);
 
-    try {
-      await schema.schemaNumber.validateAsync(id);
+    if(Number.isNaN(id)) {return res.status(406).json({message: "Id deve ser um número"})  }
 
+    try {
       const address = await prisma.address.findUnique({ where: { id } });
       if (address) {
         await prisma.address.delete({ where: { id } });
@@ -56,17 +55,20 @@ class AddressController {
 
   static updateAddress = async (req: Request, res: Response) => {
     const id = +req.params.id;
-    const data = req.body
+    const data = req.body;
+    
+    if(Number.isNaN(id)) {return res.status(406).json({message: "Id deve ser um número"})  }
+
     try {
 
-      if(Number.isNaN(id)) {return res.status(406).json({message: "Id deve ser um número"})  }
-
       const address = await prisma.address.findUnique({ where: { id } });
+
       if (address) {
         await prisma.address.update({
           where: { id },
           data
         });
+
         res.status(200).json({ message: "Endereço atualizado com sucesso!" });
       } else {
         res.status(404).json({ message: "Endereço não encontrado!" });
