@@ -25,9 +25,13 @@ class UnitController {
   }
 
   static findUnit = async(req: Request,res: Response) => {
-    const id = parseInt(req.params.id)
+    const id = +req.params.id;
 
     try {   
+      if(req.params.id){
+        if(Number.isNaN(id)) {return res.status(406).json({message: "Id deve ser um número"})  }
+      }
+
       if(id) {   
         const unit = await prisma.unit.findUnique({ where: { id }, include: { address: true }})
         
