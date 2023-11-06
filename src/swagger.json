@@ -25,7 +25,7 @@
               }
             }
           },
-          "500":{
+          "500": {
             "description": "Erro no servidor"
           }
         }
@@ -81,7 +81,7 @@
         "summary": "Deletar um funcionário pelo ID.",
         "description": "Essa rota retorna uma mensagem de sucesso ou erro.",
         "tags": ["Employee"],
-        "parameters":[
+        "parameters": [
           {
             "id": "id",
             "in": "path",
@@ -96,9 +96,9 @@
               "application/json": {
                 "schema": {
                   "type": "string"
-                  }
                 }
               }
+            }
           },
           "404": {
             "description": "Informe um id válido.",
@@ -116,7 +116,7 @@
         "summary": "Atualiza um funcionário pelo ID.",
         "description": "Essa rota retorna uma mensagem de sucesso ou erro.",
         "tags": ["Employee"],
-        "parameters":[
+        "parameters": [
           {
             "id": "id",
             "in": "path",
