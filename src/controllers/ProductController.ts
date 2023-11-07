@@ -8,6 +8,10 @@ class ProductController {
     static findAllProduct = async (req: Request, res: Response) => {
         const id = +req.params.id;
 
+        if(req.params.id){
+            if(Number.isNaN(id)) { return res.status(406).json({message: "Id deve ser um número"}) }
+        }
+
         try {
             if(id){
                 const findOneProduct = await prisma.product.findUnique({ where: { codProduct: id } })
@@ -53,6 +57,10 @@ class ProductController {
 
         const updateAt = new Date();
 
+        if(req.params.id){
+            if(Number.isNaN(id)) { return res.status(406).json({message: "Id deve ser um número"}) }
+        }
+
         try {
             await prisma.product.update({
                 where: {
@@ -71,6 +79,10 @@ class ProductController {
 
     static deleteProduct = async (req: Request, res: Response) =>{
         const id = +req.params.id;
+
+        if(req.params.id){
+            if(Number.isNaN(id)) { return res.status(406).json({message: "Id deve ser um número"}) }
+        }
 
         try {
             await prisma.product.delete({
