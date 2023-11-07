@@ -21,8 +21,8 @@ route.post('/employee', validation.requestBody(schema.employee), EmployeeControl
 route.put('/employee/:id', validation.requestBody(schema.employeeUpdate), validation.existEmployee, validation.update, EmployeeController.updateEmployee);
 route.delete('/employee/:id', validation.existEmployee, EmployeeController.deleteEmployee);
 
-route.post('/unit', validationFields, UnitController.newUnit);
 route.get('/unit/:id?', validation.existUnit, UnitController.findUnit);
+route.post('/unit', validation.requestBody(schema.unit), validation.existAddress,validation.existAddressCadastrado, UnitController.newUnit);
 
 route.get("/product/:id?", ProductController.findAllProduct);
 route.post("/product", validation.requestBody(schema.product), validation.existProduct, ProductController.createNewProduct);
