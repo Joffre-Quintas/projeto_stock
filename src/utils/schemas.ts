@@ -2,6 +2,20 @@ import joi from "joi";
 
 class schema {
 
+    static unit = joi.object({
+        addressId: joi.number().positive().integer().required().messages({
+            'number.base': 'Informe um id do endereço com valor numérico válido',
+            'number.positive': 'Informe um id do endereço com valor positivo válido',
+            'number.integer': 'O campo id do endereço precisa ser um número inteiro',
+        }), 
+
+        name: joi.string().messages({
+            'any.required': 'O campo nome é obrigatório',
+            'string.empty': 'O campo nome não pode ficar vazio', 
+            'string.base': 'O campo nome deve ser escrito no formato de válido',
+        })
+    })
+
     static address = joi.object({
         cep: joi.string().min(8).max(8).regex(/\d{8}/).required().messages({
             'string.pattern.base': 'O formato deve ser numérico.', 

@@ -88,6 +88,40 @@ class validation {
     }
   };
 
+  static existAddress = async (req: Request, res: Response, next: NextFunction) => {
+    const addressId = +req.body.addressId;
+
+    try {
+      const address = await prisma.address.findUnique({
+        where: { id: addressId }
+      });
+
+      if (!address) {
+        return res.status(404).json({ message: 'Endereço não encontrado!' });
+      }
+
+      next();
+    } catch (error) {
+      res.status(400).json({ mensagem: 'Erro interno no servidor.' });
+    }
+  };
+
+  static existAddressCadastrado = async (req: Request, res: Response, next: NextFunction) => {
+    const addressId = req.body.addressId;
+
+    try {
+      const findAddress = await prisma.unit.findMany({ where: { addressId } });
+
+      if(findAddress){
+        return res.status(400).json({ message: 'Esse endereço foi cadastrado em outra unidade.' });
+      }
+
+      next();
+    } catch (error) {
+      res.status(400).json({ message: 'Erro interno no servidor.' });
+    }
+  }
+
   static existProductUnit = async (req: Request, res: Response, next: NextFunction) => {
     const id = +req.params.id;
 
