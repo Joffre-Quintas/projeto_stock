@@ -125,6 +125,10 @@ class validation {
   static existProductUnit = async (req: Request, res: Response, next: NextFunction) => {
     const id = +req.params.id;
 
+    if(req.params.id){
+      if(Number.isNaN(id)) { return res.status(406).json({message: "Id deve ser um número"}) }
+    }
+
     try {
       const productUnit = await prisma.productToUnit.findUnique({ where: { id } });
 
@@ -140,14 +144,20 @@ class validation {
 
   static productUnit = async (req: Request, res: Response, next: NextFunction) => {
     const { productId, unitId } = req.body;
-
     const id = +req.params.id;
-
+    
+    if(req.params.id){
+      if(Number.isNaN(id)) { return res.status(406).json({message: "Id deve ser um número"}) }
+    }
+    
     try {
-      const existProductUnit = await prisma.productToUnit.findUnique({ where: { id } });
 
-      if (!existProductUnit) {
-        return res.status(200).json({ message: 'Id da relação do produto e unidade não existe, relação não atualizada.' });
+      if(id){
+        const existProductUnit = await prisma.productToUnit.findUnique({ where: { id } });
+  
+        if (!existProductUnit) {
+          return res.status(200).json({ message: 'Id da relação do produto e unidade não existe, relação não atualizada.' });
+        }
       }
 
       if (productId) {
