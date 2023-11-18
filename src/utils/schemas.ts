@@ -8,6 +8,20 @@ class schema {
       'number.integer': 'O campo id do endereço precisa ser um número inteiro'
     }),
 
+    name: joi.string().required().messages({
+      'any.required': 'O campo nome é obrigatório',
+      'string.empty': 'O campo nome não pode ficar vazio',
+      'string.base': 'O campo nome deve ser escrito no formato de válido'
+    })
+  });
+
+  static unitUpdate = joi.object({
+    addressId: joi.number().positive().integer().messages({
+      'number.base': 'Informe um id do endereço com valor numérico válido',
+      'number.positive': 'Informe um id do endereço com valor positivo válido',
+      'number.integer': 'O campo id do endereço precisa ser um número inteiro'
+    }),
+
     name: joi.string().messages({
       'any.required': 'O campo nome é obrigatório',
       'string.empty': 'O campo nome não pode ficar vazio',
