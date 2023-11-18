@@ -30,7 +30,7 @@ route.put("/product/:id", validation.requestBody(schema.productUpdate), validati
 route.delete("/product/:id", validation.existProduct, ProductController.deleteProduct)
 
 route.get('/productUnit/:id?', ProductToUnitController.findProductUnit);
-route.post('/productUnit', validation.requestBody(schema.productUnit), validation.existProduct, validation.existUnit, ProductToUnitController.createNewRelationProductUnit);
+route.post('/productUnit', validation.requestBody(schema.productUnit), validation.productUnit, ProductToUnitController.createNewRelationProductUnit);
 route.put('/productUnit/:id', validation.requestBody(schema.productUnitUpdate), validation.update, validation.productUnit, ProductToUnitController.updateProductUnit);
 route.delete('/productUnit/:id', validation.existProductUnit, ProductToUnitController.deleteProductUnit);
 
