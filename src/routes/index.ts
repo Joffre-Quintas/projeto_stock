@@ -21,16 +21,16 @@ route.post('/employee', validation.requestBody(schema.employee), EmployeeControl
 route.put('/employee/:id', validation.requestBody(schema.employeeUpdate), validation.existEmployee, validation.update, EmployeeController.updateEmployee);
 route.delete('/employee/:id', validation.existEmployee, EmployeeController.deleteEmployee);
 
-route.post('/unit', validationFields, UnitController.newUnit);
 route.get('/unit/:id?', validation.existUnit, UnitController.findUnit);
+route.post('/unit', validation.requestBody(schema.unit), validation.existAddress,validation.existAddressCadastrado, UnitController.newUnit);
 
-route.get('/product/:id?', ProductController.findAllProduct);
-route.post('/product', validation.requestBody(schema.product), validation.existProduct, ProductController.createNewProduct);
-route.put('/product', validation.requestBody(schema.productUpdate), validation.update, validation.existProduct, ProductController.updateProduct);
-route.delete('/product', validation.requestBody(schema.id), validation.existProduct, ProductController.deleteProduct);
+route.get("/product/:id?", ProductController.findAllProduct);
+route.post("/product", validation.requestBody(schema.product), validation.existProduct, ProductController.createNewProduct);
+route.put("/product/:id", validation.requestBody(schema.productUpdate), validation.update , validation.existProduct, ProductController.updateProduct)
+route.delete("/product/:id", validation.existProduct, ProductController.deleteProduct)
 
 route.get('/productUnit/:id?', ProductToUnitController.findProductUnit);
-route.post('/productUnit', validation.requestBody(schema.productUnit), validation.existProduct, validation.existUnit, ProductToUnitController.createNewRelationProductUnit);
+route.post('/productUnit', validation.requestBody(schema.productUnit), validation.productUnit, ProductToUnitController.createNewRelationProductUnit);
 route.put('/productUnit/:id', validation.requestBody(schema.productUnitUpdate), validation.update, validation.productUnit, ProductToUnitController.updateProductUnit);
 route.delete('/productUnit/:id', validation.existProductUnit, ProductToUnitController.deleteProductUnit);
 
