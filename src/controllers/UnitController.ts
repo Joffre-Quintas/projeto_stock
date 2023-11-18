@@ -50,6 +50,16 @@ class UnitController {
     const id = +req.params.id;
 
     try {
+      const isExist = await prisma.productToUnit.findFirst({ where: { unitId: id } });
+
+      if (!!isExist) {
+        return res
+          .status(403)
+          .json({
+            message: 'Esta unidade está vinculada a algum produto. Você deve desvincular a unidade ao produto.'
+          });
+      }
+
       await prisma.unit.delete({ where: { id } });
       res.status(200).json({ message: 'Unidade deletada com sucesso!' });
     } catch (err) {
