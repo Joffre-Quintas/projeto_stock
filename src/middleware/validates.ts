@@ -106,7 +106,7 @@ class validation {
     }
   };
 
-  static existAddressCadastrado = async (req: Request, res: Response, next: NextFunction) => {
+  static existAddressRegister = async (req: Request, res: Response, next: NextFunction) => {
     const addressId = req.body.addressId;
 
     try {

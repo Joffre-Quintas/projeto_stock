@@ -14,8 +14,8 @@ class EmployeeController {
   };
 
   static createNewEmployee = async (req: Request, res: Response) => {
+    const data = req.body;
     try {
-      const data = req.body;
       await prisma.employee.create({ data });
 
       res.status(201).json({ message: 'Novo empregado cadastrado com sucesso' });
@@ -25,9 +25,14 @@ class EmployeeController {
   };
 
   static updateEmployee = async (req: Request, res: Response) => {
+    const id = +req.params.id;
+    const data = req.body;
+
+    if (Number.isNaN(id)) {
+      return res.status(406).json({ message: 'Id deve ser um número' });
+    }
+
     try {
-      const id = +req.params.id;
-      const data = req.body;
       await prisma.employee.update({
         where: {
           codEmployee: id
@@ -42,9 +47,13 @@ class EmployeeController {
   };
 
   static deleteEmployee = async (req: Request, res: Response) => {
-    try {
-      const id = +req.params.id;
+    const id = +req.params.id;
 
+    if (Number.isNaN(id)) {
+      return res.status(406).json({ message: 'Id deve ser um número' });
+    }
+
+    try {
       await prisma.employee.delete({
         where: {
           codEmployee: id
