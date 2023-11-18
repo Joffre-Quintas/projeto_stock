@@ -1,7 +1,7 @@
-import { Router } from "express";
-import StockController from "../controllers/StockController";
+import { Router } from 'express';
+import StockController from '../controllers/StockController';
 
-const stockServiceRoute = Router()
+const stockServiceRoute = Router();
 
 stockServiceRoute.get('/stockService', StockController.consultAssetValue);
 

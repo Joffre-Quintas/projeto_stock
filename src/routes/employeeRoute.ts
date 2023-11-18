@@ -1,9 +1,9 @@
-import { Router } from "express";
-import validation from "../middleware/validates";
-import schema from "../utils/schemas";
-import EmployeeController from "../controllers/EmployeeController";
+import { Router } from 'express';
+import validation from '../middleware/validates';
+import schema from '../utils/schemas';
+import EmployeeController from '../controllers/EmployeeController';
 
-const employeeRoute = Router()
+const employeeRoute = Router();
 
 employeeRoute.get('/employee', EmployeeController.findAllEmployee);
 employeeRoute.post('/employee', validation.requestBody(schema.employee), EmployeeController.createNewEmployee);

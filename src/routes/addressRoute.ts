@@ -1,7 +1,7 @@
-import { Router } from "express";
+import { Router } from 'express';
 import AddressController from '../controllers/AddressController';
-import validation from "../middleware/validates";
-import schema from "../utils/schemas";
+import validation from '../middleware/validates';
+import schema from '../utils/schemas';
 
 const addressRoute = Router();
 

@@ -8,7 +8,7 @@ import unitRoute from './unitRoute';
 
 const route = Router();
 
-const imortedRoutes = [addressRoute,employeeRoute,unitRoute, productRoute, productUnitRoute, stockServiceRoute]
-imortedRoutes.forEach( r => route.use(r))
+const imortedRoutes = [addressRoute, employeeRoute, unitRoute, productRoute, productUnitRoute, stockServiceRoute];
+imortedRoutes.forEach((r) => route.use(r));
 
 export default route;
