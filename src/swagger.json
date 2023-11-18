@@ -205,13 +205,13 @@
                     "name": "TV LED",
                     "price": 499
                   }
-                }, 
+                },
                 "Maquina de Lavar": {
                   "value": {
                     "name": "Máquina de Lavar",
                     "price": 699
-                  }              
-                }                
+                  }
+                }
               }
             }
           }
@@ -236,7 +236,7 @@
         }
       }
     },
-    "/product/id": { 
+    "/product/id": {
       "put": {
         "summary": "Atualiza um produto pelo ID.",
         "description": "Esta rota permite atualizar um produto existente pelo seu ID.",
@@ -272,13 +272,13 @@
                     "name": "Ventilador",
                     "price": 279.99
                   }
-                }, 
+                },
                 "Monitor de 29°": {
                   "value": {
                     "name": "Monitor de 29°",
                     "price": 899.99
-                  }              
-                }                
+                  }
+                }
               }
             }
           }
@@ -351,8 +351,8 @@
             }
           }
         }
-      }                  
-    }    
+      }
+    }
   },
   "components": {
     "schemas": {
@@ -369,7 +369,7 @@
           "office": {
             "type": "string"
           }
-        }    
+        }
       },
       "Product": {
         "type": "object",
@@ -382,8 +382,8 @@
             "type": "number",
             "description": "O preço unitário do produto."
           }
-        }  
-      }  
+        }
+      }
     }
   }
 }
