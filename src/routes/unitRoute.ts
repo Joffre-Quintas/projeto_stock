@@ -13,5 +13,7 @@ unitRoute.post(
   validation.existAddressCadastrado,
   UnitController.newUnit
 );
+unitRoute.delete('/unit/:id', validation.existUnit, UnitController.deleteUnit);
+unitRoute.put('/unit/:id', validation.existUnit, UnitController.updateUnit);
 
 export default unitRoute;

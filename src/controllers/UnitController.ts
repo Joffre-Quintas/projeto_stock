@@ -45,6 +45,29 @@ class UnitController {
       res.status(500).json({ message: 'Erro no servidor.', err });
     }
   };
+
+  static deleteUnit = async (req: Request, res: Response) => {
+    const id = +req.params.id;
+
+    try {
+      await prisma.unit.delete({ where: { id } });
+      res.status(200).json({ message: 'Unidade deletada com sucesso!' });
+    } catch (err) {
+      return res.status(500).json({ message: 'Erro no servidor.', err });
+    }
+  };
+
+  static updateUnit = async (req: Request, res: Response) => {
+    const id = +req.params.id;
+    const updateUnit = req.body;
+
+    try {
+      await prisma.unit.update({ where: { id }, data: updateUnit });
+      res.status(200).json({ message: 'Unidade atualizada com sucesso!' });
+    } catch (err) {
+      return res.status(500).json({ message: 'Erro no servidor.', err });
+    }
+  };
 }
 
 export default UnitController;
