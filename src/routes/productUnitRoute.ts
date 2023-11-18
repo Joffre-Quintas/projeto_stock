@@ -9,11 +9,16 @@ productUnitRoute.get('/productUnit/:id?', ProductToUnitController.findProductUni
 productUnitRoute.post(
   '/productUnit',
   validation.requestBody(schema.productUnit),
-  validation.existProduct,
-  validation.existUnit,
+  validation.productUnit,
   ProductToUnitController.createNewRelationProductUnit
 );
-productUnitRoute.put('/productUnit/:id', validation.requestBody(schema.productUnitUpdate), validation.update, validation.productUnit, ProductToUnitController.updateProductUnit);
+productUnitRoute.put(
+  '/productUnit/:id',
+  validation.requestBody(schema.productUnitUpdate),
+  validation.update,
+  validation.productUnit,
+  ProductToUnitController.updateProductUnit
+);
 productUnitRoute.delete('/productUnit/:id', validation.existProductUnit, ProductToUnitController.deleteProductUnit);
 
 export default productUnitRoute;

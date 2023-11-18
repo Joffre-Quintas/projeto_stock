@@ -1,11 +1,17 @@
 import { Router } from 'express';
 import validation from '../middleware/validates';
-import validationFields from '../middleware/validationFields';
 import UnitController from '../controllers/UnitController';
+import schema from '../utils/schemas';
 
 const unitRoute = Router();
 
-unitRoute.post('/unit', validationFields, UnitController.newUnit);
 unitRoute.get('/unit/:id?', validation.existUnit, UnitController.findUnit);
+unitRoute.post(
+  '/unit',
+  validation.requestBody(schema.unit),
+  validation.existAddress,
+  validation.existAddressCadastrado,
+  UnitController.newUnit
+);
 
 export default unitRoute;

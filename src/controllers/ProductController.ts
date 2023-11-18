@@ -5,7 +5,14 @@ const prisma = new PrismaClient();
 
 class ProductController {
   static findAllProduct = async (req: Request, res: Response) => {
-    const id = Number(req.params.id);
+    const id = +req.params.id;
+
+    if (req.params.id) {
+      if (Number.isNaN(id)) {
+        return res.status(406).json({ message: 'Id deve ser um número' });
+      }
+    }
+
     try {
       if (id) {
         const findOneProduct = await prisma.product.findUnique({ where: { codProduct: id } });
@@ -43,11 +50,19 @@ class ProductController {
   };
 
   static updateProduct = async (req: Request, res: Response) => {
-    const { id, name, price } = req.body;
+    const id = +req.params.id;
+
+    const { name, price } = req.body;
 
     const slugName = name.toLowerCase().replace(/ /g, '_');
 
     const updateAt = new Date();
+
+    if (req.params.id) {
+      if (Number.isNaN(id)) {
+        return res.status(406).json({ message: 'Id deve ser um número' });
+      }
+    }
 
     try {
       await prisma.product.update({
@@ -69,12 +84,18 @@ class ProductController {
   };
 
   static deleteProduct = async (req: Request, res: Response) => {
-    const { id } = req.body;
+    const id = +req.params.id;
+
+    if (req.params.id) {
+      if (Number.isNaN(id)) {
+        return res.status(406).json({ message: 'Id deve ser um número' });
+      }
+    }
 
     try {
       await prisma.product.delete({
         where: {
-          codProduct: Number(id)
+          codProduct: id
         }
       });
 

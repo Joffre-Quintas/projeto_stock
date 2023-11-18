@@ -5,10 +5,9 @@ const prisma = new PrismaClient();
 class UnitController {
   static newUnit = async (req: Request, res: Response) => {
     const { addressId, name } = req.body;
-
     try {
       const addressExist = await prisma.address.findUnique({ where: { id: addressId } });
-      if (!addressExist) return res.status(204).json({ message: 'Endereço não cadastrado' });
+      if (!addressExist) return res.status(404).json({ message: 'Endereço não encontrado.' });
 
       await prisma.unit.create({
         data: {
@@ -24,9 +23,15 @@ class UnitController {
   };
 
   static findUnit = async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id);
+    const id = +req.params.id;
 
     try {
+      if (req.params.id) {
+        if (Number.isNaN(id)) {
+          return res.status(406).json({ message: 'Id deve ser um número' });
+        }
+      }
+
       if (id) {
         const unit = await prisma.unit.findUnique({ where: { id }, include: { address: true } });
 

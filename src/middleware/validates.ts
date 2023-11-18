@@ -88,8 +88,48 @@ class validation {
     }
   };
 
+  static existAddress = async (req: Request, res: Response, next: NextFunction) => {
+    const addressId = +req.body.addressId;
+
+    try {
+      const address = await prisma.address.findUnique({
+        where: { id: addressId }
+      });
+
+      if (!address) {
+        return res.status(404).json({ message: 'Endereço não encontrado!' });
+      }
+
+      next();
+    } catch (error) {
+      res.status(400).json({ mensagem: 'Erro interno no servidor.' });
+    }
+  };
+
+  static existAddressCadastrado = async (req: Request, res: Response, next: NextFunction) => {
+    const addressId = req.body.addressId;
+
+    try {
+      const findAddress = await prisma.unit.findMany({ where: { addressId } });
+
+      if (findAddress) {
+        return res.status(400).json({ message: 'Esse endereço foi cadastrado em outra unidade.' });
+      }
+
+      next();
+    } catch (error) {
+      res.status(400).json({ message: 'Erro interno no servidor.' });
+    }
+  };
+
   static existProductUnit = async (req: Request, res: Response, next: NextFunction) => {
     const id = +req.params.id;
+
+    if (req.params.id) {
+      if (Number.isNaN(id)) {
+        return res.status(406).json({ message: 'Id deve ser um número' });
+      }
+    }
 
     try {
       const productUnit = await prisma.productToUnit.findUnique({ where: { id } });
@@ -106,14 +146,23 @@ class validation {
 
   static productUnit = async (req: Request, res: Response, next: NextFunction) => {
     const { productId, unitId } = req.body;
-
     const id = +req.params.id;
 
-    try {
-      const existProductUnit = await prisma.productToUnit.findUnique({ where: { id } });
+    if (req.params.id) {
+      if (Number.isNaN(id)) {
+        return res.status(406).json({ message: 'Id deve ser um número' });
+      }
+    }
 
-      if (!existProductUnit) {
-        return res.status(200).json({ message: 'Id da relação do produto e unidade não existe, relação não atualizada.' });
+    try {
+      if (id) {
+        const existProductUnit = await prisma.productToUnit.findUnique({ where: { id } });
+
+        if (!existProductUnit) {
+          return res
+            .status(200)
+            .json({ message: 'Id da relação do produto e unidade não existe, relação não atualizada.' });
+        }
       }
 
       if (productId) {
@@ -127,6 +176,7 @@ class validation {
           return res.status(404).json({ message: 'Produto não encontrado!' });
         }
       }
+
       if (unitId) {
         const unit = await prisma.unit.findUnique({
           where: {
@@ -138,6 +188,7 @@ class validation {
           return res.status(404).json({ message: 'Unidade não encontrada!' });
         }
       }
+
       next();
     } catch (error) {
       res.status(400).json({ mensagem: 'Erro interno no servidor.' });
@@ -150,6 +201,7 @@ class validation {
     if (props.length === 0) {
       return res.status(400).json({ mensagem: 'Atualize pelo menos uma informação.' });
     }
+
     next();
   };
 }

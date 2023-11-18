@@ -19,7 +19,10 @@ class ProductToUnitController {
 
         await prisma.productToUnit.update({ where: { id }, data: { quantity: quantityActual, updateAt } });
 
-        return res.status(200).json({ message: 'Relação produto e unidade já existe, quantidade atualizada com sucesso.' });
+        return res.status(200).json({
+          message:
+            'Esse produto estava cadastrado na unidade, sua quantidade atualizada com sucesso e somada a quantidade anterior.'
+        });
       } else {
         const productUnit: any = { productId, unitId, quantity, updateAt };
 
@@ -36,7 +39,13 @@ class ProductToUnitController {
   };
 
   static findProductUnit = async (req: Request, res: Response) => {
-    const id = Number(req.params.id);
+    const id = +req.params.id;
+
+    if (req.params.id) {
+      if (Number.isNaN(id)) {
+        return res.status(406).json({ message: 'Id deve ser um número' });
+      }
+    }
 
     try {
       const productUnit = await prisma.productToUnit.findMany({ include: { product: true, unit: true } });
@@ -60,24 +69,42 @@ class ProductToUnitController {
   static updateProductUnit = async (req: Request, res: Response) => {
     const { productId, unitId, quantity } = req.body;
 
-    const id = Number(req.params.id);
+    const id = +req.params.id;
 
     const updateAt = new Date();
 
+    if (req.params.id) {
+      if (Number.isNaN(id)) {
+        return res.status(406).json({ message: 'Id deve ser um número' });
+      }
+    }
+
     try {
-      if (productId && unitId) {
-        const existProductUnitEqual = await prisma.productToUnit.findFirst({ where: { productId, unitId } });
+      const existProductUnitEqual = await prisma.productToUnit.findFirst({ where: { id } });
 
-        if (existProductUnitEqual) {
-          const id = existProductUnitEqual.id;
+      const existTableUpdate = await prisma.productToUnit.findFirst({ where: { productId, unitId } });
 
-          await prisma.productToUnit.update({ where: { id }, data: { quantity, updateAt } });
+      if (existTableUpdate && existProductUnitEqual) {
+        if (quantity) {
+          const sumQuantity = quantity + existTableUpdate.quantity;
 
-          return res.status(200).json({ message: 'Relação produto e unidade já existe, quantidade atualizada com sucesso.' });
+          await prisma.productToUnit.update({
+            where: { id: existTableUpdate.id },
+            data: { quantity: sumQuantity, updateAt }
+          });
+        } else {
+          const sumQuantity = existProductUnitEqual?.quantity + existTableUpdate.quantity;
+
+          await prisma.productToUnit.update({
+            where: { id: existTableUpdate.id },
+            data: { quantity: sumQuantity, updateAt }
+          });
         }
+
+        return res.status(200).json({ message: 'Atualização feita com sucesso.' });
       }
 
-      await prisma.productToUnit.update({ where: { id }, data: { productId, unitId, quantity, updateAt } });
+      await prisma.productToUnit.update({ where: { id }, data: { ...req.body, updateAt } });
 
       return res.status(200).json({ message: 'Relação do produto e unidade atualizada com sucesso.' });
     } catch (error) {
@@ -86,16 +113,34 @@ class ProductToUnitController {
   };
 
   static deleteProductUnit = async (req: Request, res: Response) => {
-    const id = req.params.id;
+    const id = +req.params.id;
+
+    const { productId, unitId } = req.body;
+
+    if (req.params.id) {
+      if (Number.isNaN(id)) {
+        return res.status(406).json({ message: 'Id deve ser um número' });
+      }
+    }
 
     try {
-      await prisma.productToUnit.delete({
-        where: {
-          id: Number(id)
-        }
-      });
+      if (productId && unitId) {
+        const existProductUnitEqual = await prisma.productToUnit.findFirst({ where: { productId, unitId } });
 
-      return res.status(200).json({ message: 'Relação do produto e unidade excluído com sucesso.' });
+        if (existProductUnitEqual) {
+          await prisma.productToUnit.delete({
+            where: {
+              id: existProductUnitEqual.id
+            }
+          });
+        }
+      }
+
+      if (id) {
+        await prisma.productToUnit.delete({ where: { id } });
+
+        res.status(200).json({ message: 'Relação do produto e unidade excluído com sucesso.' });
+      }
     } catch (error) {
       res.status(500).json({ message: 'Erro interno no servidor.' });
     }

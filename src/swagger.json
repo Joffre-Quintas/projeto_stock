@@ -156,6 +156,202 @@
           }
         }
       }
+    },
+    "/product": {
+      "get": {
+        "summary": "Listar todos os produtos",
+        "description": "Esta rota retorna uma lista de todos os produtos disponíveis em estoque.",
+        "tags": ["Product"],
+        "responses": {
+          "200": {
+            "description": "Lista de produtos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "post": {
+        "summary": "Criar um novo produto",
+        "description": "Esta rota permite criar um novo produto no sistema.",
+        "tags": ["Product"],
+        "requestBody": {
+          "description": "Dados do novo produto",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              },
+              "examples": {
+                "Geladeira": {
+                  "value": {
+                    "name": "Geladeira",
+                    "price": 799
+                  }
+                },
+                "TV LED": {
+                  "value": {
+                    "name": "TV LED",
+                    "price": 499
+                  }
+                },
+                "Maquina de Lavar": {
+                  "value": {
+                    "name": "Máquina de Lavar",
+                    "price": 699
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Produto criado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida. Verifique os dados enviados. Esse produto já foi cadastrado."
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      }
+    },
+    "/product/id": {
+      "put": {
+        "summary": "Atualiza um produto pelo ID.",
+        "description": "Esta rota permite atualizar um produto existente pelo seu ID.",
+        "tags": ["Product"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do produto a ser atualizado.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dados do produto atualizado",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              },
+              "examples": {
+                "Guarda Roupa": {
+                  "value": {
+                    "name": "Guarda Roupa",
+                    "price": 1499.99
+                  }
+                },
+                "Ventilador": {
+                  "value": {
+                    "name": "Ventilador",
+                    "price": 279.99
+                  }
+                },
+                "Monitor de 29°": {
+                  "value": {
+                    "name": "Monitor de 29°",
+                    "price": 899.99
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Produto atualizado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação ou atualização inválida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ID do produto não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Exclui um produto pelo ID.",
+        "description": "Esta rota permite excluir um produto existente pelo seu ID.",
+        "tags": ["Product"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do produto a ser excluído.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Produto excluído com sucesso."
+          },
+          "404": {
+            "description": "ID do produto não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -172,6 +368,19 @@
           },
           "office": {
             "type": "string"
+          }
+        }
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "O nome do produto."
+          },
+          "price": {
+            "type": "number",
+            "description": "O preço unitário do produto."
           }
         }
       }
