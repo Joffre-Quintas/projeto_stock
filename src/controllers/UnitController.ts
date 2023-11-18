@@ -26,9 +26,10 @@ class UnitController {
     const id = +req.params.id;
 
     try {
-
-      if(req.params.id){
-        if(Number.isNaN(id)) {return res.status(406).json({message: "Id deve ser um número"})  }
+      if (req.params.id) {
+        if (Number.isNaN(id)) {
+          return res.status(406).json({ message: 'Id deve ser um número' });
+        }
       }
 
       if (id) {
