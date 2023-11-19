@@ -680,6 +680,130 @@
           }
         }
       }
+    },
+    "/productUnit": {
+      "get": {
+        "summary": "Listar todas as relações produto e unidade",
+        "description": "Esta rota retorna informações sobre todas as relações de produto e unidade cadastradas.",
+        "tags": ["ProductUnit"],
+        "responses": {
+          "200": {
+            "description": "Informações das relações produto e unidade",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductUnit"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "post": {
+        "summary": "Criar uma nova relação produto e unidade",
+        "description": "Esta rota permite criar uma nova relação de produto e unidade no sistema.",
+        "tags": ["ProductUnit"],
+        "requestBody": {
+          "description": "Dados da nova relação produto e unidade",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductUnit"
+              },
+              "example": {
+                "productId": 1,
+                "unitId": 1,
+                "quantity": 10
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Relação produto e unidade criada com sucesso."
+          },
+          "404": {
+            "description": "Produto ou unidade não encontrados."
+          },
+          "500": {
+            "description": "Erro no servidor."
+          }
+        }
+      }
+    },
+    "/productUnit/{id}": {
+      "put": {
+        "summary": "Atualizar relação produto e unidade",
+        "description": "Esta rota permite atualizar uma relação existente de produto e unidade.",
+        "tags": ["ProductUnit"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da relação produto e unidade a ser atualizada",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Novos dados da relação produto e unidade",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductUnit"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Relação produto e unidade atualizada com sucesso."
+          },
+          "404": {
+            "description": "Relação produto e unidade não encontrada."
+          },
+          "406": {
+            "description": "ID deve ser um número"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Excluir relação produto e unidade",
+        "description": "Esta rota permite excluir uma relação de produto e unidade do sistema.",
+        "tags": ["ProductUnit"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da relação produto e unidade a ser excluída",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Relação produto e unidade excluída com sucesso."
+          },
+          "500": {
+            "description": "Erro interno no servidor."
+          }
+        }
+      }
     }
   },
   "components": {
@@ -761,7 +885,24 @@
             "description": "Nome da unidade"
           }
         }
-      }      
+      },
+      "ProductUnit": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "description": "ID do produto associado à relação"
+          },
+          "unitId": {
+            "type": "integer",
+            "description": "ID da unidade associada à relação"
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "Quantidade associada à relação"
+          }
+        }
+      }     
     }
   }
 }
