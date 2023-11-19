@@ -517,6 +517,169 @@
           }
         }
       }
+    },
+    "/unit": {
+      "get": {
+        "summary": "Listar todas as unidades",
+        "description": "Esta rota retorna informações sobre todas as unidades cadastradas.",
+        "tags": ["Unit"],
+        "responses": {
+          "200": {
+            "description": "Informações das unidades",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Unit"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "post": {
+        "summary": "Criar uma nova unidade",
+        "description": "Esta rota permite criar uma nova unidade no sistema.",
+        "tags": ["Unit"],
+        "requestBody": {
+          "description": "Dados da nova unidade",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Unit"
+              },
+              "example": {
+                "addressId": 1,
+                "name": "Nome da Unidade"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Unidade criada com sucesso!"
+          },
+          "404": {
+            "description": "Endereço não encontrado."
+          },
+          "500": {
+            "description": "Erro no servidor!"
+          }
+        }
+      }
+    },
+    "/unit/{id}": {
+      "get": {
+        "summary": "Buscar uma unidade",
+        "description": "Esta rota retorna informações sobre uma unidade específica.",
+        "tags": ["Unit"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da unidade a ser obtida",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Informações da unidade",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unit"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unidade não encontrada"
+          },
+          "406": {
+            "description": "ID deve ser um número"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Excluir unidade",
+        "description": "Esta rota permite excluir uma unidade do sistema.",
+        "tags": ["Unit"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da unidade a ser excluída",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Unidade excluída com sucesso."
+          },
+          "403": {
+            "description": "Esta unidade está vinculada a algum produto. Você deve desvincular a unidade do produto."
+          },
+          "406": {
+            "description": "ID deve ser um número"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar dados da unidade",
+        "description": "Esta rota permite atualizar os dados de uma unidade existente.",
+        "tags": ["Unit"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da unidade a ser atualizada",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Novos dados da unidade",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Unit"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Unidade atualizada com sucesso!"
+          },
+          "406": {
+            "description": "ID deve ser um número"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -585,7 +748,20 @@
             "description": "Complemento do endereço"
           }
         }
-      }    
+      },
+      "Unit": {
+        "type": "object",
+        "properties": {
+          "addressId": {
+            "type": "integer",
+            "description": "ID do endereço associado à unidade"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome da unidade"
+          }
+        }
+      }      
     }
   }
 }
