@@ -352,6 +352,171 @@
           }
         }
       }
+    },
+    "/address": {
+      "get": {
+        "summary": "Listar todos os endereços",
+        "description": "Esta rota retorna uma lista de todos os endereços cadastrados.",
+        "tags": ["Address"],
+        "responses": {
+          "200": {
+            "description": "Lista de endereços",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Address"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "post": {
+        "summary": "Adicionar um novo endereço",
+        "description": "Esta rota permite adicionar um novo endereço no sistema.",
+        "tags": ["Address"],
+        "requestBody": {
+          "description": "Dados do novo endereço",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Address"
+              },
+              "example": {
+                "cep": "12345678",
+                "state": "SP",
+                "city": "São Paulo",
+                "neighborhood": "Bairro",
+                "street": "Rua Principal",
+                "number": 123,
+                "complement": "Complemento"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Endereço adicionado com sucesso!"
+          },
+          "400": {
+            "description": "Requisição inválida. Verifique os dados enviados."
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      }
+    },
+    "/address/{id}": {
+      "get": {
+        "summary": "Obter informações de um endereço",
+        "description": "Esta rota retorna informações detalhadas de um endereço específico.",
+        "tags": ["Address"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do endereço a ser obtido",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Informações do endereço",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Address"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Endereço não encontrado"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar dados do endereço",
+        "description": "Esta rota permite atualizar os dados de um endereço existente.",
+        "tags": ["Address"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do endereço a ser atualizado",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Novos dados do endereço",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Address"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dados do endereço atualizados com sucesso."
+          },
+          "400": {
+            "description": "Requisição inválida. Verifique os dados enviados."
+          },
+          "404": {
+            "description": "Endereço não encontrado"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Excluir endereço",
+        "description": "Esta rota permite excluir um endereço do sistema.",
+        "tags": ["Address"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do endereço a ser excluído",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Endereço excluído com sucesso."
+          },
+          "404": {
+            "description": "Endereço não encontrado"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -383,7 +548,44 @@
             "description": "O preço unitário do produto."
           }
         }
-      }
+      },
+      "Address": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "ID do endereço"
+          },
+          "cep": {
+            "type": "string",
+            "description": "CEP do endereço"
+          },
+          "state": {
+            "type": "string",
+            "description": "Estado do endereço"
+          },
+          "city": {
+            "type": "string",
+            "description": "Cidade do endereço"
+          },
+          "neighborhood": {
+            "type": "string",
+            "description": "Bairro do endereço"
+          },
+          "street": {
+            "type": "string",
+            "description": "Rua do endereço"
+          },
+          "number": {
+            "type": "number",
+            "description": "Número do endereço"
+          },
+          "complement": {
+            "type": "string",
+            "description": "Complemento do endereço"
+          }
+        }
+      }    
     }
   }
 }
