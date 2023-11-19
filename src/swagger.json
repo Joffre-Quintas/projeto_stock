@@ -804,6 +804,48 @@
           }
         }
       }
+    },
+    "/stockService": {
+      "get": {
+        "summary": "Consultar valor total dos ativos",
+        "description": "Esta rota retorna o valor total dos ativos por unidade.",
+        "tags": ["StockService"],
+        "responses": {
+          "200": {
+            "description": "Valor total dos ativos por unidade",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "description": "Nome do produto"
+                        },
+                        "price": {
+                          "type": "number",
+                          "description": "Preço do produto"
+                        },
+                        "quantity": {
+                          "type": "integer",
+                          "description": "Quantidade do produto"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -900,6 +942,15 @@
           "quantity": {
             "type": "integer",
             "description": "Quantidade associada à relação"
+          }
+        }
+      },
+      "StockServiceResponse": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/Product"
           }
         }
       }     
