@@ -1,11 +1,10 @@
 {
     "swagger": "2.0",
     "info": {
-      "title": "Employee API",
+      "title": "Stock API",
       "version": "1.0.0",
-      "description": "API para gerenciamento de funcionários"
+      "description": "API para gerenciamento Stock"
     },
-    "basePath": "/api",
     "paths": {
       "/employee": {
         "get": {
@@ -121,8 +120,453 @@
             }
           }
         }
+      },
+      "/address": {
+        "get": {
+        "summary": "Lista todos os endereços",
+        "tags": ["Address"],
+        "responses": {
+            "200": {
+                "description": "Retorna a lista de endereços",
+                "schema": {
+                    "type": "array",
+                    "items": {
+                    "$ref": "#/definitions/Address"
+                    }
+                }
+            }
+        }
+        },
+        "post": {
+        "summary": "Cria um novo endereço",
+        "tags": ["Address"],
+        "requestBody": {
+            "required": true,
+            "content": {
+            "application/json": {
+                "schema": {
+                "$ref": "#/definitions/AddressInput"
+                }
+            }
+            }
+        },
+        "responses": {
+            "201": {
+            "description": "Endereço criado com sucesso"
+            },
+            "400": {
+            "description": "Erro de validação no servidor"
+            }
+        }
+        }
+      },
+      "/address/{id}": {
+        "put": {
+        "summary": "Atualiza um endereço",
+        "tags": ["Address"],
+        "parameters": [
+            {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+            "application/json": {
+                "schema": {
+                "$ref": "#/definitions/AddressUpdateInput"
+                }
+            }
+            }
+        },
+        "responses": {
+            "200": {
+            "description": "Endereço atualizado com sucesso"
+            },
+            "404": {
+            "description": "Endereço não encontrado"
+            },
+            "500": {
+            "description": "Erro no servidor"
+            }
+        }
+        },
+        "delete": {
+        "summary": "Exclui um endereço",
+        "tags": ["Address"],
+        "parameters": [
+            {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+            }
+        ],
+        "responses": {
+            "200": {
+            "description": "Endereço excluído com sucesso"
+            },
+            "404": {
+            "description": "Endereço não encontrado"
+            },
+            "500": {
+            "description": "Erro no servidor"
+            }
+        }
+        }
+      },
+      "/product/{id}": {
+        "get": {
+          "summary": "Encontrar um produto por ID",
+          "tags": ["Product"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": false,
+              "type": "integer",
+              "description": "ID do produto a ser recuperado (opcional)"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Retorna o produto encontrado"
+            },
+            "404": {
+              "description": "Produto não encontrado"
+            },
+            "500": {
+              "description": "Erro no servidor"
+            }
+          }
+        },
+        "put": {
+          "summary": "Atualizar um produto por ID",
+          "tags": ["Product"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "integer",
+              "description": "ID do produto a ser atualizado"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/ProductUpdateInput"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Produto atualizado com sucesso"
+            },
+            "404": {
+              "description": "Produto não encontrado"
+            },
+            "500": {
+              "description": "Erro no servidor"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Excluir um produto por ID",
+          "tags": ["Product"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "integer",
+              "description": "ID do produto a ser excluído"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Produto excluído com sucesso"
+            },
+            "404": {
+              "description": "Produto não encontrado"
+            },
+            "500": {
+              "description": "Erro no servidor"
+            }
+          }
+        }
+      },
+      "/product": {
+        "post": {
+          "summary": "Criar um novo produto",
+          "tags": ["Product"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/ProductInput"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Produto criado com sucesso"
+            },
+            "400": {
+              "description": "Erro de validação no servidor"
+            },
+            "409": {
+              "description": "Produto já existe"
+            }
+          }
+        }
+      },
+      "/unit/{id}": {
+        "get": {
+          "summary": "Encontrar uma unidade por ID",
+          "tags": ["Unit"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": false,
+              "type": "integer",
+              "description": "ID da unidade a ser recuperada (opcional)"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Retorna a unidade encontrada"
+            },
+            "404": {
+              "description": "Unidade não encontrada"
+            },
+            "500": {
+              "description": "Erro no servidor"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Excluir uma unidade por ID",
+          "tags": ["Unit"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "integer",
+              "description": "ID da unidade a ser excluída"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Unidade excluída com sucesso"
+            },
+            "404": {
+              "description": "Unidade não encontrada"
+            },
+            "500": {
+              "description": "Erro no servidor"
+            }
+          }
+        },
+        "put": {
+          "summary": "Atualizar uma unidade por ID",
+          "tags": ["Unit"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "integer",
+              "description": "ID da unidade a ser atualizada"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/UnitUpdateInput"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Unidade atualizada com sucesso"
+            },
+            "404": {
+              "description": "Unidade não encontrada"
+            },
+            "500": {
+              "description": "Erro no servidor"
+            }
+          }
+        }
+      },
+      "/unit": {
+        "post": {
+          "summary": "Criar uma nova unidade",
+          "tags": ["Unit"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/UnitInput"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Unidade criada com sucesso"
+            },
+            "400": {
+              "description": "Erro de validação no servidor"
+            },
+            "409": {
+              "description": "Unidade já existe"
+            }
+          }
+        }
+      },
+      "/productUnit/{id}": {
+        "get": {
+          "summary": "Encontrar uma relação produto e unidade por ID",
+          "tags": ["ProductUnit"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": false,
+              "type": "integer",
+              "description": "ID da relação produto e unidade a ser recuperada (opcional)"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Retorna a relação produto e unidade encontrada"
+            },
+            "404": {
+              "description": "Relação produto e unidade não encontrada"
+            },
+            "500": {
+              "description": "Erro no servidor"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Excluir uma relação produto e unidade por ID",
+          "tags": ["ProductUnit"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "integer",
+              "description": "ID da relação produto e unidade a ser excluída"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Relação produto e unidade excluída com sucesso"
+            },
+            "404": {
+              "description": "Relação produto e unidade não encontrada"
+            },
+            "500": {
+              "description": "Erro no servidor"
+            }
+          }
+        },
+        "put": {
+          "summary": "Atualizar uma relação produto e unidade por ID",
+          "tags": ["ProductUnit"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "integer",
+              "description": "ID da relação produto e unidade a ser atualizada"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/ProductUnitUpdateInput"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Relação produto e unidade atualizada com sucesso"
+            },
+            "404": {
+              "description": "Relação produto e unidade não encontrada"
+            },
+            "500": {
+              "description": "Erro no servidor"
+            }
+          }
+        }
+      },
+      "/productUnit": {
+        "post": {
+          "summary": "Criar uma nova relação produto e unidade",
+          "tags": ["ProductUnit"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/ProductUnitInput"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Relação produto e unidade criada com sucesso"
+            },
+            "400": {
+              "description": "Erro de validação no servidor"
+            },
+            "409": {
+              "description": "Relação produto e unidade já existe"
+            }
+          }
+        }
+      },
+      "/stockService": {
+        "get": {
+          "summary": "Consultar o valor total de ativos em estoque por unidade",
+          "tags": ["StockService"],
+          "responses": {
+            "200": {
+              "description": "Retorna o valor total de ativos em estoque por unidade"
+            },
+            "500": {
+              "description": "Erro no servidor"
+            }
+          }
+        }
       }
     },
+    
     "definitions": {
       "Employee": {
         "type": "object",
@@ -192,6 +636,202 @@
           "hireDate": "O campo data de contratação é obrigatório. Não pode ficar vazio. Deve seguir o padrão ISO 8601.",
           "office": "O campo função de trabalho é obrigatório. Não pode ficar vazio. Deve ser uma string.",
           "cpf": "O campo CPF é obrigatório. Deve conter 11 dígitos numéricos."
+        }
+      },
+      "Address": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "cep": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "neighborhood": {
+            "type": "string"
+          },
+          "street": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string"
+          },
+          "complement": {
+            "type": "string"
+          },
+          "unit": {
+            "$ref": "#/definitions/Unit"
+          }
+        }
+      },
+      "AddressInput": {
+        "type": "object",
+        "properties": {
+          "cep": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "neighborhood": {
+            "type": "string"
+          },
+          "street": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string"
+          },
+          "complement": {
+            "type": "string"
+          }
+        },
+        "required": ["cep", "state", "city", "neighborhood", "street"]
+      },
+      "AddressUpdateInput": {
+        "type": "object",
+        "properties": {
+          "cep": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "neighborhood": {
+            "type": "string"
+          },
+          "street": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string"
+          },
+          "complement": {
+            "type": "string"
+          }
+        }
+      },
+      "Unit": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "address": {
+            "$ref": "#/definitions/Address"
+          },
+          "addressId": {
+            "type": "integer"
+          },
+          "product": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ProductToUnit"
+            }
+          }
+        }
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "codProduct": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "slugName": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "unit": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ProductToUnit"
+            }
+          }
+        }
+      },
+      "ProductToUnit": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "product": {
+            "$ref": "#/definitions/Product"
+          },
+          "productId": {
+            "type": "integer"
+          },
+          "unit": {
+            "$ref": "#/definitions/Unit"
+          },
+          "unitId": {
+            "type": "integer"
+          },
+          "quantity": {
+            "type": "integer"
+          },
+          "updateAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ProductUnitInput": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "integer"
+          },
+          "unitId": {
+            "type": "integer"
+          },
+          "quantity": {
+            "type": "integer"
+          }
+        },
+        "required": ["productId", "unitId", "quantity"]
+      },
+      "ProductUnitUpdateInput": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "integer"
+          },
+          "unitId": {
+            "type": "integer"
+          },
+          "quantity": {
+            "type": "integer"
+          }
         }
       }
     }
