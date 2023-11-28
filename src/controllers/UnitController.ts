@@ -49,7 +49,19 @@ class UnitController {
   static deleteUnit = async (req: Request, res: Response) => {
     const id = +req.params.id;
 
+    if (Number.isNaN(id)) {
+      return res.status(406).json({ message: 'Id deve ser um número' });
+    }
+
     try {
+      const isExist = await prisma.productToUnit.findFirst({ where: { unitId: id } });
+
+      if (!!isExist) {
+        return res.status(403).json({
+          message: 'Esta unidade está vinculada a algum produto. Você deve desvincular a unidade ao produto.'
+        });
+      }
+
       await prisma.unit.delete({ where: { id } });
       res.status(200).json({ message: 'Unidade deletada com sucesso!' });
     } catch (err) {
@@ -60,6 +72,10 @@ class UnitController {
   static updateUnit = async (req: Request, res: Response) => {
     const id = +req.params.id;
     const updateUnit = req.body;
+
+    if (Number.isNaN(id)) {
+      return res.status(406).json({ message: 'Id deve ser um número' });
+    }
 
     try {
       await prisma.unit.update({ where: { id }, data: updateUnit });

@@ -352,6 +352,500 @@
           }
         }
       }
+    },
+    "/address": {
+      "get": {
+        "summary": "Listar todos os endereços",
+        "description": "Esta rota retorna uma lista de todos os endereços cadastrados.",
+        "tags": ["Address"],
+        "responses": {
+          "200": {
+            "description": "Lista de endereços",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Address"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "post": {
+        "summary": "Adicionar um novo endereço",
+        "description": "Esta rota permite adicionar um novo endereço no sistema.",
+        "tags": ["Address"],
+        "requestBody": {
+          "description": "Dados do novo endereço",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Address"
+              },
+              "example": {
+                "cep": "12345678",
+                "state": "SP",
+                "city": "São Paulo",
+                "neighborhood": "Bairro",
+                "street": "Rua Principal",
+                "number": 123,
+                "complement": "Complemento"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Endereço adicionado com sucesso!"
+          },
+          "400": {
+            "description": "Requisição inválida. Verifique os dados enviados."
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      }
+    },
+    "/address/{id}": {
+      "get": {
+        "summary": "Obter informações de um endereço",
+        "description": "Esta rota retorna informações detalhadas de um endereço específico.",
+        "tags": ["Address"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do endereço a ser obtido",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Informações do endereço",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Address"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Endereço não encontrado"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar dados do endereço",
+        "description": "Esta rota permite atualizar os dados de um endereço existente.",
+        "tags": ["Address"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do endereço a ser atualizado",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Novos dados do endereço",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Address"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dados do endereço atualizados com sucesso."
+          },
+          "400": {
+            "description": "Requisição inválida. Verifique os dados enviados."
+          },
+          "404": {
+            "description": "Endereço não encontrado"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Excluir endereço",
+        "description": "Esta rota permite excluir um endereço do sistema.",
+        "tags": ["Address"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do endereço a ser excluído",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Endereço excluído com sucesso."
+          },
+          "404": {
+            "description": "Endereço não encontrado"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      }
+    },
+    "/unit": {
+      "get": {
+        "summary": "Listar todas as unidades",
+        "description": "Esta rota retorna informações sobre todas as unidades cadastradas.",
+        "tags": ["Unit"],
+        "responses": {
+          "200": {
+            "description": "Informações das unidades",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Unit"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "post": {
+        "summary": "Criar uma nova unidade",
+        "description": "Esta rota permite criar uma nova unidade no sistema.",
+        "tags": ["Unit"],
+        "requestBody": {
+          "description": "Dados da nova unidade",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Unit"
+              },
+              "example": {
+                "addressId": 1,
+                "name": "Nome da Unidade"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Unidade criada com sucesso!"
+          },
+          "404": {
+            "description": "Endereço não encontrado."
+          },
+          "500": {
+            "description": "Erro no servidor!"
+          }
+        }
+      }
+    },
+    "/unit/{id}": {
+      "get": {
+        "summary": "Buscar uma unidade",
+        "description": "Esta rota retorna informações sobre uma unidade específica.",
+        "tags": ["Unit"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da unidade a ser obtida",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Informações da unidade",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unit"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unidade não encontrada"
+          },
+          "406": {
+            "description": "ID deve ser um número"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Excluir unidade",
+        "description": "Esta rota permite excluir uma unidade do sistema.",
+        "tags": ["Unit"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da unidade a ser excluída",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Unidade excluída com sucesso."
+          },
+          "403": {
+            "description": "Esta unidade está vinculada a algum produto. Você deve desvincular a unidade do produto."
+          },
+          "406": {
+            "description": "ID deve ser um número"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar dados da unidade",
+        "description": "Esta rota permite atualizar os dados de uma unidade existente.",
+        "tags": ["Unit"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da unidade a ser atualizada",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Novos dados da unidade",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Unit"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Unidade atualizada com sucesso!"
+          },
+          "406": {
+            "description": "ID deve ser um número"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      }
+    },
+    "/productUnit": {
+      "get": {
+        "summary": "Listar todas as relações produto e unidade",
+        "description": "Esta rota retorna informações sobre todas as relações de produto e unidade cadastradas.",
+        "tags": ["ProductUnit"],
+        "responses": {
+          "200": {
+            "description": "Informações das relações produto e unidade",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductUnit"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "post": {
+        "summary": "Criar uma nova relação produto e unidade",
+        "description": "Esta rota permite criar uma nova relação de produto e unidade no sistema.",
+        "tags": ["ProductUnit"],
+        "requestBody": {
+          "description": "Dados da nova relação produto e unidade",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductUnit"
+              },
+              "example": {
+                "productId": 1,
+                "unitId": 1,
+                "quantity": 10
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Relação produto e unidade criada com sucesso."
+          },
+          "404": {
+            "description": "Produto ou unidade não encontrados."
+          },
+          "500": {
+            "description": "Erro no servidor."
+          }
+        }
+      }
+    },
+    "/productUnit/{id}": {
+      "put": {
+        "summary": "Atualizar relação produto e unidade",
+        "description": "Esta rota permite atualizar uma relação existente de produto e unidade.",
+        "tags": ["ProductUnit"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da relação produto e unidade a ser atualizada",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Novos dados da relação produto e unidade",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductUnit"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Relação produto e unidade atualizada com sucesso."
+          },
+          "404": {
+            "description": "Relação produto e unidade não encontrada."
+          },
+          "406": {
+            "description": "ID deve ser um número"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Excluir relação produto e unidade",
+        "description": "Esta rota permite excluir uma relação de produto e unidade do sistema.",
+        "tags": ["ProductUnit"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da relação produto e unidade a ser excluída",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Relação produto e unidade excluída com sucesso."
+          },
+          "500": {
+            "description": "Erro interno no servidor."
+          }
+        }
+      }
+    },
+    "/stockService": {
+      "get": {
+        "summary": "Consultar valor total dos ativos",
+        "description": "Esta rota retorna o valor total dos ativos por unidade.",
+        "tags": ["StockService"],
+        "responses": {
+          "200": {
+            "description": "Valor total dos ativos por unidade",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "description": "Nome do produto"
+                        },
+                        "price": {
+                          "type": "number",
+                          "description": "Preço do produto"
+                        },
+                        "quantity": {
+                          "type": "integer",
+                          "description": "Quantidade do produto"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -383,7 +877,83 @@
             "description": "O preço unitário do produto."
           }
         }
-      }
+      },
+      "Address": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "ID do endereço"
+          },
+          "cep": {
+            "type": "string",
+            "description": "CEP do endereço"
+          },
+          "state": {
+            "type": "string",
+            "description": "Estado do endereço"
+          },
+          "city": {
+            "type": "string",
+            "description": "Cidade do endereço"
+          },
+          "neighborhood": {
+            "type": "string",
+            "description": "Bairro do endereço"
+          },
+          "street": {
+            "type": "string",
+            "description": "Rua do endereço"
+          },
+          "number": {
+            "type": "number",
+            "description": "Número do endereço"
+          },
+          "complement": {
+            "type": "string",
+            "description": "Complemento do endereço"
+          }
+        }
+      },
+      "Unit": {
+        "type": "object",
+        "properties": {
+          "addressId": {
+            "type": "integer",
+            "description": "ID do endereço associado à unidade"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome da unidade"
+          }
+        }
+      },
+      "ProductUnit": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "description": "ID do produto associado à relação"
+          },
+          "unitId": {
+            "type": "integer",
+            "description": "ID da unidade associada à relação"
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "Quantidade associada à relação"
+          }
+        }
+      },
+      "StockServiceResponse": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/Product"
+          }
+        }
+      }     
     }
   }
 }

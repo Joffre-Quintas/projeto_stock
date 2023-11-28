@@ -10,10 +10,16 @@ unitRoute.post(
   '/unit',
   validation.requestBody(schema.unit),
   validation.existAddress,
-  validation.existAddressCadastrado,
+  validation.existAddressRegister,
   UnitController.newUnit
 );
 unitRoute.delete('/unit/:id', validation.existUnit, UnitController.deleteUnit);
-unitRoute.put('/unit/:id', validation.existUnit, UnitController.updateUnit);
+unitRoute.put(
+  '/unit/:id',
+  validation.existUnit,
+  validation.existAddress,
+  validation.requestBody(schema.unitUpdate),
+  UnitController.updateUnit
+);
 
 export default unitRoute;
