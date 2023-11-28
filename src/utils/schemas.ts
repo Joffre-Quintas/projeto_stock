@@ -141,7 +141,7 @@ class schema {
       .regex(/\d{11}/)
       .messages({
         'string.pattern.base': 'O formato deve ser numérico.',
-        'any.required': 'O campo função de trabalho é obrigatório',
+        'any.required': 'O campo CPF é obrigatório.',
         'string.max': 'CPF de deve conter 11 dígitos. Apenas números.',
         'string.min': 'CPF de deve conter 11 dígitos. Apenas números.'
       })
