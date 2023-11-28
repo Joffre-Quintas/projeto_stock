@@ -45,8 +45,7 @@
                   "value": {
                     "fullName": "Kaio Lima",
                     "hireDate": "2023-11-02T15:00:00Z",
-                    "office": "Estoquista",
-                    "cpf": "12345678912"
+                    "office": "Estoquista"
                   }
                 },
                 "Vendedor": {
@@ -101,18 +100,8 @@
               }
             }
           },
-          "400": {
-            "description": "Informe um id válido.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          },
           "404": {
-            "description": "Funcionario não encontrado!",
+            "description": "Informe um id válido.",
             "content": {
               "application/json": {
                 "schema": {
@@ -140,32 +129,6 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/Employee"
-              },
-              "examples": {
-                "teste1": {
-                  "value": {
-                    "fullName": "Fulaninho",
-                    "hireDate": "2023-11-28T15:31:30Z",
-                    "office": "Tester",
-                    "cpf": "98765432198"
-                  }
-                },
-                "teste2": {
-                  "value": {
-                    "fullName": "Sicraninho",
-                    "hireDate": "2023-11-28T15:31:30Z",
-                    "office": "outro tester",
-                    "cpf": "98765432197"
-                  }
-                },
-                "teste3": {
-                  "value": {
-                    "fullName": "Sivirina",
-                    "hireDate": "2023-11-28T15:31:30Z",
-                    "office": "QA",
-                    "cpf": "98765432196"
-                  }
-                }
               }
             }
           }
@@ -404,9 +367,6 @@
             "format": "date-time"
           },
           "office": {
-            "type": "string"
-          },
-          "cpf": {
             "type": "string"
           }
         }
