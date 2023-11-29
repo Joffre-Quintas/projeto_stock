@@ -5,7 +5,7 @@ import EmployeeController from '../controllers/EmployeeController';
 
 const employeeRoute = Router();
 
-employeeRoute.get('/employee', EmployeeController.findAllEmployee);
+employeeRoute.get('/employee:id?', EmployeeController.findAllEmployee);
 employeeRoute.post('/employee', validation.requestBody(schema.employee), EmployeeController.createNewEmployee);
 employeeRoute.put(
   '/employee/:id',
