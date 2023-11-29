@@ -33,28 +33,3 @@ A documentação da API, com seus endpoints, opções de requisições e possív
 2. **Execute a Aplicação**
    ```bash
    npm run dev
-
-<!-- ## 🤝 Colaboradores -->
-
-Agradecemos às seguintes pessoas que contribuíram para este projeto:
-
-<table>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/joffre-quintas">
-        <img src="https://avatars.githubusercontent.com/u/117463401?v=4" width="100px;" alt="Foto do Joffre Quintas no Github"/><br>
-        <sub>
-          <b>Joffre Quintas</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/Gabpnavarro">
-        <img src="https://avatars.githubusercontent.com/u/118223745?v=4" width="100px;" alt="Foto do Gabriel Navarro no GitHub"/><br>
-        <sub>
-          <b>Gabriel Navarro</b>
-        </sub>
-      </a>
-    </td>
-  </tr>
-</table>
