@@ -34,7 +34,7 @@ A documentação da API, com seus endpoints, opções de requisições e possív
    ```bash
    npm run dev
 
-## 🤝 Colaboradores
+<!-- ## 🤝 Colaboradores -->
 
 Agradecemos às seguintes pessoas que contribuíram para este projeto:
 
